@@ -121,6 +121,12 @@ input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.2)}
 .hl-box{border-radius:8px;padding:12px 16px;font-size:13px;margin-bottom:12px;line-height:1.5}
 .hl-green{background:#edf7ef;border:1px solid rgba(58,158,79,.3);color:#1a5c28}
 .hl-blue{background:#eef3fb;border:1px solid rgba(74,111,165,.25);color:#1e3a6e}
+.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.tipo-card{border:2px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;background:#fff;transition:.2s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--text)}
+.tipo-card:hover,.tipo-card.active{border-color:var(--accent);background:#edf7ef;box-shadow:0 4px 14px rgba(58,158,79,.12)}
+.tipo-card strong{display:block;color:var(--blue);font-size:15px;margin-bottom:4px}.tipo-card span{font-size:12px;color:var(--muted)}
+.natureza-only[hidden]{display:none!important}
+@media(max-width:600px){.tipo-grid{grid-template-columns:1fr}}
 /* ROSCA */
 .rosca-wrap{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
 canvas#rosca{flex-shrink:0}
@@ -198,15 +204,24 @@ canvas#rosca{flex-shrink:0}
       </div>
     </div>
   </div>
-  <!-- 02 PRODUTO -->
+  <!-- 02 NATUREZA E OFERTA -->
   <div class="mt">
-    <div class="section-title">02 — Produto</div>
+    <div class="section-title">02 — Natureza da Oferta</div>
     <div class="card">
-      <div class="grid-2">
-        <div class="field"><label>Nome do Produto</label><div class="field-row"><input type="text" id="nomeProduto" placeholder="Ex: Bolo de cenoura" oninput="autoCalc()"></div></div>
-        <div class="field"><label>Unidade</label><div class="field-row"><input type="text" id="unidade" placeholder="Ex: unidade, kg, caixa" oninput="autoCalc()"></div></div>
-        <div class="field"><label>Quantidade do Lote</label><div class="field-row"><input type="number" id="qtdProduzir" min="1" step="1" placeholder="Ex: 50" oninput="autoCalc()"><div class="field-suffix">un.</div></div></div>
+      <div class="tipo-grid">
+        <button type="button" class="tipo-card active" id="tipoProdutoBtn" onclick="selecionarTipo('produto')"><strong>📦 Produto físico</strong><span>Produção, revenda, estoque, embalagem e perdas.</span></button>
+        <button type="button" class="tipo-card" id="tipoServicoBtn" onclick="selecionarTipo('servico')"><strong>🛠 Serviço</strong><span>Tempo faturável, atendimento, deslocamento e capacidade.</span></button>
       </div>
+      <input type="hidden" id="tipoOferta" value="produto">
+      <div class="grid-2">
+        <div class="field"><label id="labelNomeOferta">Nome do Produto</label><div class="field-row"><input type="text" id="nomeProduto" placeholder="Ex: Bolo de cenoura" oninput="autoCalc()"></div></div>
+        <div class="field"><label id="labelUnidade">Unidade de venda</label><div class="field-row"><input type="text" id="unidade" placeholder="Ex: unidade, kg, caixa" oninput="autoCalc()"></div></div>
+        <div class="field"><label id="labelQtd">Quantidade produzida no lote</label><div class="field-row"><input type="number" id="qtdProduzir" min="1" step="1" placeholder="Ex: 50" oninput="autoCalc()"><div class="field-suffix" id="sufixoQtd">un.</div></div></div>
+        <div class="field"><label>Vendas mensais previstas</label><div class="field-row"><input type="number" id="vendasMensais" min="1" step="1" placeholder="Ex: 100" oninput="autoCalc()"><div class="field-suffix">vendas</div></div></div>
+        <div class="field"><label>Capacidade máxima mensal</label><div class="field-row"><input type="number" id="capacidadeMensal" min="1" step="1" placeholder="Ex: 150" oninput="autoCalc()"><div class="field-suffix">vendas</div></div></div>
+        <div class="field"><label>Lucro mensal desejado</label><div class="field-row"><div class="field-prefix">R$</div><input type="number" id="lucroDesejado" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
+      </div>
+      <div class="info-box">💡 A previsão mensal permite separar corretamente <strong>margem de contribuição</strong> de <strong>lucro líquido</strong>. O lote é usado para apurar o custo unitário; as vendas mensais, para avaliar a viabilidade do negócio.</div>
     </div>
   </div>
   <!-- 02b CUSTO FIXO ITEMIZADO -->
@@ -237,22 +252,22 @@ canvas#rosca{flex-shrink:0}
   </div>
   <!-- 04 MATÉRIA-PRIMA -->
   <div class="mt">
-    <div class="section-title">04 — Matéria-Prima / Ingredientes</div>
+    <div class="section-title" id="tituloMateriais">04 — Matéria-Prima / Mercadorias</div>
     <div class="card">
-      <p style="font-size:12px;color:var(--muted);margin-bottom:12px">Custo <strong>total do lote</strong> — será dividido pela quantidade produzida.</p>
+      <p id="textoMateriais" style="font-size:12px;color:var(--muted);margin-bottom:12px">Custo <strong>total do lote</strong> — mercadoria, matéria-prima, ingredientes e perdas.</p>
       <div id="listaMateriais"></div>
       <button class="btn-add" onclick="addItem('materiais')">＋ Adicionar</button>
     </div>
   </div>
   <!-- 05 MÃO DE OBRA -->
   <div class="mt">
-    <div class="section-title">05 — Mão de Obra</div>
+    <div class="section-title" id="tituloMaoObra">05 — Mão de Obra Direta</div>
     <div class="card">
       <div class="grid-2">
-        <div class="field"><label>Horas totais (lote)</label><div class="field-row"><input type="number" id="horasProd" min="0" step="0.25" placeholder="0" oninput="autoCalc()"><div class="field-suffix">h</div></div></div>
+        <div class="field"><label id="labelHoras">Horas totais do lote</label><div class="field-row"><input type="number" id="horasProd" min="0" step="0.25" placeholder="0" oninput="autoCalc()"><div class="field-suffix">h</div></div></div>
         <div class="field"><label>Valor da hora</label><div class="field-row"><div class="field-prefix">R$</div><input type="number" id="valorHora" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
       </div>
-      <div class="info-box">💡 Inclua seu próprio tempo. Ref: salário mínimo/hora ≈ R$ 7,86.</div>
+      <div class="info-box" id="dicaMaoObra">💡 Inclua seu próprio tempo de produção, preparação e acabamento. Defina o valor da hora com base no pró-labore pretendido e nas horas realmente produtivas.</div>
     </div>
   </div>
   <!-- 06 CUSTOS VARIÁVEIS -->
@@ -266,10 +281,10 @@ canvas#rosca{flex-shrink:0}
   </div>
   <!-- 07 MARGEM -->
   <div class="mt">
-    <div class="section-title">07 — Margem de Lucro</div>
+    <div class="section-title">07 — Margem Líquida Desejada</div>
     <div class="card">
       <div class="margem-header">
-        <div><div style="font-size:11px;color:var(--muted);margin-bottom:2px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Margem selecionada</div><div class="margem-valor" id="margemDisplay">30%</div></div>
+        <div><div style="font-size:11px;color:var(--muted);margin-bottom:2px;font-weight:600;letter-spacing:1px;text-transform:uppercase">Margem líquida sobre a receita</div><div class="margem-valor" id="margemDisplay">30%</div></div>
         <div class="margem-zona zona-ok" id="zonaLabel">✓ Faixa Recomendada</div>
       </div>
       <input type="range" id="sliderMargem" min="5" max="60" value="30" oninput="updateMargem(this.value);autoCalc()" style="--pct:47.3%">
@@ -280,6 +295,7 @@ canvas#rosca{flex-shrink:0}
         <button class="faixa-btn" onclick="setMargem(40,this)">40% — Agressivo</button>
         <button class="faixa-btn" onclick="setMargem(50,this)">50% — Premium</button>
       </div>
+      <div class="info-box">A margem líquida desejada é calculada <strong>depois dos custos variáveis, impostos e rateio dos custos fixos</strong>, considerando as vendas mensais previstas. Não confundir com markup.</div>
     </div>
   </div>
   <button class="btn-calc" onclick="calcular()">▶ CALCULAR PREÇO DE VENDA</button>
@@ -293,7 +309,13 @@ canvas#rosca{flex-shrink:0}
         <div class="res-item"><div class="res-label">Custo/unidade</div><div class="res-valor" id="resCusto">—</div><div class="res-sub">sem impostos</div></div>
         <div class="res-item destaque"><div class="res-label">💰 Preço de Venda</div><div class="res-valor" id="resPreco">—</div><div class="res-sub" id="resProdutoSub">—</div></div>
         <div class="res-item"><div class="res-label">Imposto/unidade</div><div class="res-valor" id="resImposto" style="color:var(--red)">—</div><div class="res-sub" id="resImpostoSub">—</div></div>
-        <div class="res-item"><div class="res-label">Lucro líquido/un.</div><div class="res-valor" id="resLucro" style="color:var(--green)">—</div><div class="res-sub" id="resLucroSub">—</div></div>
+        <div class="res-item"><div class="res-label">Margem de contribuição</div><div class="res-valor" id="resLucro" style="color:var(--green)">—</div><div class="res-sub" id="resLucroSub">—</div></div>
+      </div>
+      <div class="resultado-grid">
+        <div class="res-item"><div class="res-label">MC percentual</div><div class="res-valor" id="resMcPct">—</div><div class="res-sub">sobre o preço de venda</div></div>
+        <div class="res-item"><div class="res-label">Lucro líquido mensal</div><div class="res-valor" id="resLucroMensal">—</div><div class="res-sub" id="resLucroMensalSub">—</div></div>
+        <div class="res-item"><div class="res-label">Margem líquida real</div><div class="res-valor" id="resMargemLiquida">—</div><div class="res-sub">após custos fixos</div></div>
+        <div class="res-item"><div class="res-label">Markup multiplicador</div><div class="res-valor" id="resMarkup">—</div><div class="res-sub">preço ÷ custo variável</div></div>
       </div>
       <div class="hl-box hl-green" id="resLoteInfo"></div>
       <div class="hl-box hl-blue" id="resDescontoInfo"></div>
@@ -343,7 +365,7 @@ canvas#rosca{flex-shrink:0}
       <div class="be-cards">
         <div class="be-card"><div class="be-num" id="beUnidades">—</div><div class="be-label">unidades/mês</div><div class="be-sub">para cobrir custos fixos</div></div>
         <div class="be-card"><div class="be-num" id="beFaturamento">—</div><div class="be-label">faturamento mínimo</div><div class="be-sub">ponto de equilíbrio</div></div>
-        <div class="be-card"><div class="be-num" id="beDias">—</div><div class="be-label">dias para equilibrar</div><div class="be-sub">vendendo 1 un./dia</div></div>
+        <div class="be-card"><div class="be-num" id="beDias">—</div><div class="be-label">dias para equilibrar</div><div class="be-sub">no ritmo mensal previsto</div></div>
       </div>
       <div class="dica" id="dicaBreakEven"></div>
     </div>
@@ -383,8 +405,27 @@ let dadosCalc=null; // guarda último cálculo
 
 document.addEventListener('DOMContentLoaded',()=>{
   addItem('materiais'); addItem('variaveis'); addItem('fixos');
-  updateMargem(30); updateImposto(); atualizarTotalFixo();
+  selecionarTipo('produto'); updateMargem(30); updateImposto(); atualizarTotalFixo();
 });
+
+function selecionarTipo(tipo){
+  document.getElementById('tipoOferta').value=tipo;
+  document.getElementById('tipoProdutoBtn').classList.toggle('active',tipo==='produto');
+  document.getElementById('tipoServicoBtn').classList.toggle('active',tipo==='servico');
+  const servico=tipo==='servico';
+  document.getElementById('labelNomeOferta').textContent=servico?'Nome do serviço':'Nome do produto';
+  document.getElementById('nomeProduto').placeholder=servico?'Ex: Consultoria de marketing':'Ex: Bolo de cenoura';
+  document.getElementById('labelUnidade').textContent=servico?'Unidade de cobrança':'Unidade de venda';
+  document.getElementById('unidade').placeholder=servico?'Ex: atendimento, hora, pacote':'Ex: unidade, kg, caixa';
+  document.getElementById('labelQtd').textContent=servico?'Atendimentos incluídos no cálculo':'Quantidade produzida no lote';
+  document.getElementById('sufixoQtd').textContent=servico?'atend.':'un.';
+  document.getElementById('tituloMateriais').textContent=servico?'04 — Insumos e Custos Diretos do Serviço':'04 — Matéria-Prima / Mercadorias';
+  document.getElementById('textoMateriais').innerHTML=servico?'Materiais, deslocamento e terceiros usados no <strong>conjunto de atendimentos</strong>.':'Custo <strong>total do lote</strong> — mercadoria, matéria-prima, ingredientes e perdas.';
+  document.getElementById('tituloMaoObra').textContent=servico?'05 — Tempo Faturável do Serviço':'05 — Mão de Obra Direta';
+  document.getElementById('labelHoras').textContent=servico?'Horas totais para os atendimentos':'Horas totais do lote';
+  document.getElementById('dicaMaoObra').innerHTML=servico?'💡 Considere execução, preparação, reunião, deslocamento e pós-atendimento. Use <strong>horas faturáveis</strong>, não todas as horas disponíveis no mês.':'💡 Inclua seu próprio tempo de produção, preparação e acabamento. Defina o valor da hora com base no pró-labore pretendido e nas horas realmente produtivas.';
+  autoCalc();
+}
 
 function addItem(lista){
   const id=Date.now()+Math.random();
@@ -434,6 +475,10 @@ function autoCalc(){if(!jaCalculou)return;clearTimeout(autoTimer);autoTimer=setT
 
 function calcular(){
   const qtd=parseInt(document.getElementById('qtdProduzir').value)||1;
+  const vendasMensais=parseInt(document.getElementById('vendasMensais').value)||qtd;
+  const capacidadeMensal=parseInt(document.getElementById('capacidadeMensal').value)||0;
+  const lucroDesejado=parseFloat(document.getElementById('lucroDesejado').value)||0;
+  const tipoOferta=document.getElementById('tipoOferta').value||'produto';
   const horasProd=parseFloat(document.getElementById('horasProd').value)||0;
   const valorHora=parseFloat(document.getElementById('valorHora').value)||0;
   const custoFixoMensal=listas.fixos.reduce((s,i)=>s+(parseFloat(i.valor)||0),0);
@@ -446,34 +491,47 @@ function calcular(){
   const matUn=matBruto/qtd;
   const mdoUn=mdoTotal/qtd;
   const custoUn=matUn+mdoUn+varUn;
-  if(custoUn<=0){alert('Informe ao menos um custo.');return;}
+  if(custoUn<=0){alert('Informe ao menos um custo variável ou direto.');return;}
   const fMarg=margemAtual/100,fImp=aliquotaAtual/100;
-  const divisor=1-fMarg-fImp;
-  if(divisor<=0){alert('Margem + Imposto ≥ 100%. Reduza os valores.');return;}
-  const preco=custoUn/divisor;
+  const rateioFixo=custoFixoMensal/vendasMensais;
+  const divisor=lucroDesejado>0?1-fImp:1-fMarg-fImp;
+  if(divisor<=0){alert('Margem + imposto devem ser menores que 100%.');return;}
+  const preco=lucroDesejado>0?(custoUn+(custoFixoMensal+lucroDesejado)/vendasMensais)/(1-fImp):(custoUn+rateioFixo)/divisor;
   const impostoUn=preco*fImp;
-  const lucroUn=preco*fMarg;
+  const mcUn=preco-custoUn-impostoUn;
+  const mcPct=preco>0?mcUn/preco*100:0;
+  const lucroMensal=mcUn*vendasMensais-custoFixoMensal;
+  const margemLiquidaReal=preco*vendasMensais>0?lucroMensal/(preco*vendasMensais)*100:0;
+  const lucroUn=lucroMensal/vendasMensais;
+  const markup=custoUn>0?preco/custoUn:0;
   jaCalculou=true;
-  dadosCalc={custoUn,preco,impostoUn,lucroUn,qtd,nomeProd,unidade,matUn,mdoUn,varUn,matBruto,mdoTotal,custoFixoMensal};
+  dadosCalc={tipoOferta,custoUn,preco,impostoUn,lucroUn,mcUn,mcPct,lucroMensal,margemLiquidaReal,markup,qtd,vendasMensais,capacidadeMensal,lucroDesejado,nomeProd,unidade,matUn,mdoUn,varUn,matBruto,mdoTotal,custoFixoMensal};
 
   document.getElementById('resCusto').textContent=fmt(custoUn);
   document.getElementById('resPreco').textContent=fmt(preco);
   document.getElementById('resProdutoSub').textContent=`${nomeProd} · ${unidade}`;
   document.getElementById('resImposto').textContent=fmt(impostoUn);
   document.getElementById('resImpostoSub').textContent=`${aliquotaAtual.toFixed(1)}% sobre a venda`;
-  document.getElementById('resLucro').textContent=fmt(lucroUn);
-  document.getElementById('resLucroSub').textContent=`${margemAtual}% de margem`;
-  document.getElementById('resLoteInfo').innerHTML=`<strong>📦 Lote de ${qtd} ${unidade}${qtd>1?'s':''}:</strong> Receita ${fmt(preco*qtd)} · Lucro líquido ${fmt(lucroUn*qtd)}`;
-  document.getElementById('resDescontoInfo').innerHTML=`<strong>🏷 Desconto máximo sem prejuízo:</strong> até <strong>${(lucroUn/preco*100).toFixed(1)}%</strong> (≈ ${fmt(lucroUn)}) — zera o lucro mas cobre custos e impostos.`;
+  document.getElementById('resLucro').textContent=fmt(mcUn);
+  document.getElementById('resLucroSub').textContent=`${mcPct.toFixed(1)}% de contribuição`;
+  document.getElementById('resMcPct').textContent=mcPct.toFixed(1)+'%';
+  document.getElementById('resLucroMensal').textContent=fmt(lucroMensal);
+  document.getElementById('resLucroMensal').style.color=lucroMensal>=0?'var(--green)':'var(--red)';
+  document.getElementById('resLucroMensalSub').textContent=`com ${vendasMensais} venda(s)/mês`;
+  document.getElementById('resMargemLiquida').textContent=margemLiquidaReal.toFixed(1)+'%';
+  document.getElementById('resMarkup').textContent=markup.toFixed(2)+'×';
+  document.getElementById('resLoteInfo').innerHTML=`<strong>${tipoOferta==='servico'?'🛠':'📦'} ${qtd} ${unidade}${qtd>1?'s':''}:</strong> Receita ${fmt(preco*qtd)} · Contribuição ${fmt(mcUn*qtd)}. <strong>Projeção mensal:</strong> receita ${fmt(preco*vendasMensais)} · lucro líquido ${fmt(lucroMensal)}.`;
+  const descontoEquilibrio=preco>0?Math.max(0,(preco-(custoUn+rateioFixo)/(1-fImp))/preco*100):0;
+  document.getElementById('resDescontoInfo').innerHTML=`<strong>🏷 Desconto máximo preservando o equilíbrio mensal:</strong> <strong>${descontoEquilibrio.toFixed(1)}%</strong>. Acima disso, a projeção de ${vendasMensais} vendas não cobre todos os custos.`;
 
-  renderAlertas(matUn,custoUn);
-  renderBarra(matUn,mdoUn,varUn,impostoUn,lucroUn,preco);
-  renderRosca(matUn,mdoUn,varUn,impostoUn,lucroUn,preco);
-  renderDesconto(preco,custoUn,impostoUn,lucroUn,qtd);
+  renderAlertas(matUn,custoUn,mcPct,lucroMensal,vendasMensais,capacidadeMensal);
+  renderBarra(matUn,mdoUn,varUn,impostoUn,mcUn,preco);
+  renderRosca(matUn,mdoUn,varUn,impostoUn,mcUn,preco);
+  renderDesconto(preco,custoUn,qtd,vendasMensais,custoFixoMensal);
   renderComparador();
-  renderBreakEven(preco,custoUn,impostoUn,custoFixoMensal);
-  renderCenarios(matBruto,mdoTotal,varUn,qtd);
-  renderTabela(custoUn);
+  renderBreakEven(preco,custoUn,impostoUn,custoFixoMensal,capacidadeMensal,vendasMensais);
+  renderCenarios(matBruto,mdoTotal,varUn,qtd,custoFixoMensal,vendasMensais);
+  renderTabela(custoUn,rateioFixo);
 
   document.getElementById('dica').innerHTML=`<strong>💡 Análise:</strong> Custo unitário <strong>${fmt(custoUn)}</strong>, imposto <strong>${fmt(impostoUn)}</strong>, preço ideal <strong>${fmt(preco)}</strong>. ${margemAtual<20?'<br><br><strong>⚠</strong> Margem abaixo de 20% — risco de não cobrir imprevistos.':''} ${margemAtual>=40?'<br><br><strong>✨ Margem Premium</strong> — certifique-se de que o valor percebido justifica o preço.':''}`;
 
@@ -481,26 +539,30 @@ function calcular(){
   if(!window._scrolled){document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'});window._scrolled=true;}
 }
 
-function renderAlertas(mat,custo){
+function renderAlertas(mat,custo,mcPct,lucroMensal,vendasMensais,capacidadeMensal){
   const al=[];
   const pct=custo>0?mat/custo*100:0;
   if(pct>60)al.push({t:'warn',i:'⚠️',m:`Matéria-prima representa <strong>${pct.toFixed(0)}%</strong> do custo. Alta dependência de insumos.`});
   if(margemAtual<20)al.push({t:'danger',i:'🚨',m:`Margem de <strong>${margemAtual}%</strong> abaixo do mínimo recomendado (20%).`});
   if(aliquotaAtual===0)al.push({t:'warn',i:'📋',m:`Nenhum imposto informado. Se você vende formalmente, inclua a tributação.`});
   if(margemAtual+aliquotaAtual>50)al.push({t:'info',i:'💡',m:`Margem + imposto = <strong>${(margemAtual+aliquotaAtual).toFixed(1)}%</strong> do preço. Verifique a competitividade.`});
+  if(mcPct<=0)al.push({t:'danger',i:'🚨',m:'A margem de contribuição é negativa. Cada venda aumenta o prejuízo.'});
+  else if(mcPct<20)al.push({t:'warn',i:'⚠️',m:`Margem de contribuição de <strong>${mcPct.toFixed(1)}%</strong> oferece pouca proteção contra oscilações.`});
+  if(lucroMensal<0)al.push({t:'danger',i:'📉',m:`Com ${vendasMensais} vendas mensais, o negócio projeta <strong>${fmt(lucroMensal)}</strong> de resultado.`});
+  if(capacidadeMensal>0&&vendasMensais>capacidadeMensal)al.push({t:'danger',i:'⛔',m:`A previsão de ${vendasMensais} vendas supera a capacidade informada de <strong>${capacidadeMensal}</strong>.`});
   if(al.length===0)al.push({t:'ok',i:'✅',m:`Simulação saudável! Margem de <strong>${margemAtual}%</strong> dentro da faixa recomendada.`});
   const cls={warn:'alerta-warn',danger:'alerta-danger',ok:'alerta-ok',info:'alerta-info'};
   document.getElementById('alertas').innerHTML=al.map(a=>`<div class="alerta ${cls[a.t]}"><span class="alerta-icon">${a.i}</span><span>${a.m}</span></div>`).join('');
 }
 
 function renderBarra(mat,mdo,varr,imp,luc,total){
-  const segs=[{label:'Matéria-prima',val:mat,cls:'seg-mat',cor:'#3b82f6'},{label:'Mão de obra',val:mdo,cls:'seg-mdo',cor:'#8b5cf6'},{label:'Custo variável',val:varr,cls:'seg-var',cor:'#f97316'},{label:'Imposto',val:imp,cls:'seg-imp',cor:'#ef4444'},{label:'Lucro',val:luc,cls:'seg-luc',cor:'#f5c842'}].filter(s=>s.val>0);
+  const segs=[{label:'Matéria-prima / insumos',val:mat,cls:'seg-mat',cor:'#3b82f6'},{label:'Mão de obra direta',val:mdo,cls:'seg-mdo',cor:'#8b5cf6'},{label:'Outros variáveis',val:varr,cls:'seg-var',cor:'#f97316'},{label:'Imposto',val:imp,cls:'seg-imp',cor:'#ef4444'},{label:'Margem de contribuição',val:luc,cls:'seg-luc',cor:'#f5c842'}].filter(s=>s.val>0);
   document.getElementById('barraCustos').innerHTML=segs.map(s=>{const pct=(s.val/total*100).toFixed(1);return`<div class="barra-seg ${s.cls}" style="width:${pct}%">${pct>8?pct+'%':''}</div>`;}).join('');
   document.getElementById('legenda').innerHTML=segs.map(s=>`<div class="leg-item"><div class="leg-dot" style="background:${s.cor}"></div>${s.label}: ${fmt(s.val)}</div>`).join('');
 }
 
 function renderRosca(mat,mdo,varr,imp,luc,total){
-  const segs=[{label:'Matéria-prima',val:mat,cor:'#3b82f6'},{label:'Mão de obra',val:mdo,cor:'#8b5cf6'},{label:'Custo variável',val:varr,cor:'#f97316'},{label:'Imposto',val:imp,cor:'#ef4444'},{label:'Lucro',val:luc,cor:'#f5c842'}].filter(s=>s.val>0);
+  const segs=[{label:'Matéria-prima / insumos',val:mat,cor:'#3b82f6'},{label:'Mão de obra direta',val:mdo,cor:'#8b5cf6'},{label:'Outros variáveis',val:varr,cor:'#f97316'},{label:'Imposto',val:imp,cor:'#ef4444'},{label:'Margem de contribuição',val:luc,cor:'#f5c842'}].filter(s=>s.val>0);
   const canvas=document.getElementById('rosca');
   const ctx=canvas.getContext('2d');
   const cx=90,cy=90,r=78,ri=48;
@@ -524,21 +586,23 @@ function renderRosca(mat,mdo,varr,imp,luc,total){
   }).join('');
 }
 
-function renderDesconto(preco,custo,imposto,lucroUn,qtd){
+function renderDesconto(preco,custo,qtd,vendasMensais,custoFixoMensal){
   const descs=[0,5,10,15,20,25,30];
-  let html=`<thead><tr><th>Desconto</th><th>Preço final</th><th>Lucro/un.</th><th>Lucro lote</th><th>Situação</th></tr></thead><tbody>`;
+  let html=`<thead><tr><th>Desconto</th><th>Preço final</th><th>MC/un.</th><th>Lucro mensal</th><th>Situação</th></tr></thead><tbody>`;
   descs.forEach(d=>{
     const precoDesc=preco*(1-d/100);
-    const lucroDesc=precoDesc-custo-imposto;
-    const lucroLote=lucroDesc*qtd;
-    const isZero=lucroDesc<=0;
+    const impostoDesc=precoDesc*(aliquotaAtual/100);
+    const mcDesc=precoDesc-custo-impostoDesc;
+    const lucroMensalDesc=mcDesc*vendasMensais-custoFixoMensal;
+    const isZero=lucroMensalDesc<0;
     const cor=isZero?'var(--red)':d===0?'var(--green)':'var(--orange)';
-    const sit=isZero?'❌ Prejuízo':d===0?'✅ Sem desconto':lucroDesc<lucroUn*0.3?'⚠ Lucro baixo':'🟡 Aceitável';
-    html+=`<tr${isZero?' class="zero"':''}><td><strong>${d}%</strong></td><td class="num" style="color:var(--accent)">${fmt(precoDesc)}</td><td class="num" style="color:${cor}">${fmt(lucroDesc)}</td><td class="num" style="color:${cor}">${fmt(lucroLote)}</td><td style="font-size:12px">${sit}</td></tr>`;
+    const sit=isZero?'❌ Prejuízo':d===0?'✅ Sem desconto':lucroMensalDesc===0?'⚠ Equilíbrio':'🟡 Ainda lucrativo';
+    html+=`<tr${isZero?' class="zero"':''}><td><strong>${d}%</strong></td><td class="num" style="color:var(--accent)">${fmt(precoDesc)}</td><td class="num" style="color:${cor}">${fmt(mcDesc)}</td><td class="num" style="color:${cor}">${fmt(lucroMensalDesc)}</td><td style="font-size:12px">${sit}</td></tr>`;
   });
   document.getElementById('tabelaDesconto').innerHTML=html+'</tbody>';
-  const maxDesc=(lucroUn/preco*100).toFixed(1);
-  document.getElementById('dicaDesconto').innerHTML=`<strong>💡 Regra de ouro:</strong> o desconto máximo sem prejuízo é <strong>${maxDesc}%</strong>. Acima disso você vende no prejuízo. Prefira oferecer brindes ou condições de pagamento a dar descontos altos.`;
+  const precoEquilibrio=(custo+custoFixoMensal/vendasMensais)/(1-aliquotaAtual/100);
+  const maxDesc=Math.max(0,(1-precoEquilibrio/preco)*100);
+  document.getElementById('dicaDesconto').innerHTML=`<strong>💡 Regra de ouro:</strong> com ${vendasMensais} vendas/mês, o desconto máximo para ainda cobrir custos variáveis e fixos é <strong>${maxDesc.toFixed(1)}%</strong>. O imposto foi recalculado sobre cada preço com desconto.`;
 }
 
 function renderComparador(){
@@ -586,7 +650,7 @@ function renderComparador(){
   dica.style.display='block';
 }
 
-function renderBreakEven(preco,custo,imposto,custoFixoMensal){
+function renderBreakEven(preco,custo,imposto,custoFixoMensal,capacidadeMensal,vendasMensais){
   if(custoFixoMensal<=0){
     ['beUnidades','beFaturamento','beDias'].forEach(id=>document.getElementById(id).textContent='—');
     document.getElementById('dicaBreakEven').innerHTML='<strong>💡 Dica:</strong> Informe o <strong>Custo Fixo Mensal</strong> na seção 02 para calcular o ponto de equilíbrio.';
@@ -596,32 +660,36 @@ function renderBreakEven(preco,custo,imposto,custoFixoMensal){
   if(mcUn<=0){document.getElementById('dicaBreakEven').innerHTML='<strong>⚠ Margem de contribuição negativa.</strong> Revise custos e preço.';return;}
   const beUn=Math.ceil(custoFixoMensal/mcUn);
   const beFat=beUn*preco;
-  const beDias=Math.ceil(beUn/30);
+  const vendasDia=Math.max(vendasMensais/30,1/30);
+  const beDias=Math.ceil(beUn/vendasDia);
   document.getElementById('beUnidades').textContent=beUn.toLocaleString('pt-BR');
   document.getElementById('beFaturamento').textContent=fmt(beFat);
   document.getElementById('beDias').textContent=beDias;
-  document.getElementById('dicaBreakEven').innerHTML=`<strong>💡 Break-even:</strong> venda ao menos <strong>${beUn} unidades/mês</strong> (faturando ${fmt(beFat)}) para cobrir os ${fmt(custoFixoMensal)} de custos fixos. Cada unidade extra gera <strong>${fmt(mcUn)}</strong> de contribuição ao lucro.`;
+  const capacidadeMsg=capacidadeMensal>0&&beUn>capacidadeMensal?` <strong style="color:var(--red)">Atenção:</strong> esse ponto de equilíbrio supera sua capacidade de ${capacidadeMensal} vendas/mês.`:'';
+  document.getElementById('dicaBreakEven').innerHTML=`<strong>💡 Break-even:</strong> realize ao menos <strong>${beUn} vendas/mês</strong> (faturando ${fmt(beFat)}) para cobrir ${fmt(custoFixoMensal)} de custos fixos. Cada venda gera <strong>${fmt(mcUn)}</strong> de contribuição.${capacidadeMsg}`;
 }
 
-function renderCenarios(matBruto,mdoTotal,varUn,qtdBase){
+function renderCenarios(matBruto,mdoTotal,varUn,qtdBase,custoFixoMensal,vendasMensais){
   const cens=[{cls:'cenario-pess',badge:'📉 Pessimista',qf:.8,mf:1.1,desc:'−20% produção, +10% mat.'},{cls:'cenario-real',badge:'📊 Realista',qf:1,mf:1,desc:'Cenário atual'},{cls:'cenario-otim',badge:'📈 Otimista',qf:1.2,mf:.9,desc:'+20% produção, −10% mat.'}];
   document.getElementById('cenariosGrid').innerHTML=cens.map(c=>{
     const qtd=Math.max(1,Math.round(qtdBase*c.qf));
     const mat=(matBruto*c.mf)/qtd,mdo=mdoTotal/qtd,custo=mat+mdo+varUn;
+    const rateioFixo=custoFixoMensal/Math.max(1,Math.round(vendasMensais*c.qf));
     const div=1-margemAtual/100-aliquotaAtual/100;
     if(div<=0)return`<div class="cenario-card ${c.cls}"><div class="cen-badge">${c.badge}</div><div style="color:var(--red);font-size:13px;margin-top:8px">Inviável</div></div>`;
-    const preco=custo/div,lucro=preco*(margemAtual/100),imp=preco*(aliquotaAtual/100);
-    return`<div class="cenario-card ${c.cls}"><div class="cen-badge">${c.badge}</div><div class="cen-preco">${fmt(preco)}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${c.desc}</div><div class="cen-row"><span>Qtd lote</span><span>${qtd} un.</span></div><div class="cen-row"><span>Custo/un</span><span>${fmt(custo)}</span></div><div class="cen-row"><span>Imposto/un</span><span>${fmt(imp)}</span></div><div class="cen-row"><span>Lucro/un</span><span style="color:var(--green)">${fmt(lucro)}</span></div></div>`;
+    const preco=(custo+rateioFixo)/div,imp=preco*(aliquotaAtual/100),mc=preco-custo-imp;
+    const vendas=Math.max(1,Math.round(vendasMensais*c.qf)),lucroMensal=mc*vendas-custoFixoMensal;
+    return`<div class="cenario-card ${c.cls}"><div class="cen-badge">${c.badge}</div><div class="cen-preco">${fmt(preco)}</div><div style="font-size:11px;color:var(--muted);margin-top:2px">${c.desc}</div><div class="cen-row"><span>Vendas/mês</span><span>${vendas}</span></div><div class="cen-row"><span>Custo variável/un</span><span>${fmt(custo)}</span></div><div class="cen-row"><span>MC/un</span><span>${fmt(mc)}</span></div><div class="cen-row"><span>Lucro mensal</span><span style="color:${lucroMensal>=0?'var(--green)':'var(--red)'}">${fmt(lucroMensal)}</span></div></div>`;
   }).join('');
 }
 
-function renderTabela(custo){
+function renderTabela(custo,rateioFixo){
   const margens=[10,15,20,25,30,35,40,50];
   let html=`<thead><tr><th>Margem</th><th>Preço</th><th>Imposto</th><th>Lucro</th><th>Desc. Máx.</th></tr></thead><tbody>`;
   margens.forEach(m=>{
     const div=1-m/100-aliquotaAtual/100;
     if(div<=0){html+=`<tr><td>${m}%</td><td colspan="4" style="color:var(--red);font-size:12px">Inviável</td></tr>`;return;}
-    const p=custo/div,imp=p*(aliquotaAtual/100),l=p*(m/100),dm=(l/p*100).toFixed(1);
+    const p=(custo+rateioFixo)/div,imp=p*(aliquotaAtual/100),mc=p-custo-imp,l=p*m/100,dm=Math.max(0,(p-(custo+rateioFixo)/(1-aliquotaAtual/100))/p*100).toFixed(1);
     const isAtual=m===margemAtual,cor=m<20?'var(--red)':m<=40?'var(--green)':'var(--orange)';
     html+=`<tr${isAtual?' class="atual"':''}><td>${m}%${isAtual?'<span class="tag-atual">ATUAL</span>':''}</td><td class="num" style="color:var(--accent)">${fmt(p)}</td><td class="num" style="color:var(--red)">${fmt(imp)}</td><td class="num" style="color:${cor}">${fmt(l)}</td><td style="color:var(--blue)">${dm}%</td></tr>`;
   });
@@ -630,7 +698,7 @@ function renderTabela(custo){
 
 function coletarDados(){
   const g=id=>document.getElementById(id)?.value||'';
-  return{ts:Date.now(),nomeEmpreendedor:g('nomeEmpreendedor'),nomeEmpresa:g('nomeEmpresa'),emailEmpreendedor:g('emailEmpreendedor'),telefoneEmpreendedor:g('telefoneEmpreendedor'),nomeProduto:g('nomeProduto'),unidade:g('unidade'),qtdProduzir:g('qtdProduzir'),custoFixoMensal:listas.fixos.reduce((s,i)=>s+(parseFloat(i.valor)||0),0),regime:g('regime'),aliquotaCustom:g('aliquotaCustom'),horasProd:g('horasProd'),valorHora:g('valorHora'),margem:margemAtual,listas:JSON.parse(JSON.stringify(listas))};
+  return{ts:Date.now(),tipoOferta:g('tipoOferta'),nomeEmpreendedor:g('nomeEmpreendedor'),nomeEmpresa:g('nomeEmpresa'),emailEmpreendedor:g('emailEmpreendedor'),telefoneEmpreendedor:g('telefoneEmpreendedor'),nomeProduto:g('nomeProduto'),unidade:g('unidade'),qtdProduzir:g('qtdProduzir'),vendasMensais:g('vendasMensais'),capacidadeMensal:g('capacidadeMensal'),lucroDesejado:g('lucroDesejado'),custoFixoMensal:listas.fixos.reduce((s,i)=>s+(parseFloat(i.valor)||0),0),regime:g('regime'),aliquotaCustom:g('aliquotaCustom'),horasProd:g('horasProd'),valorHora:g('valorHora'),margem:margemAtual,listas:JSON.parse(JSON.stringify(listas))};
 }
 async function salvarSimulacao(){
   const nome=prompt('Nome para esta simulação:',document.getElementById('nomeProduto').value||'Nova simulação');
@@ -673,7 +741,7 @@ async function salvarSimulacao(){
     preco_venda:dc.preco||null,
     imposto_unitario:dc.impostoUn||null,
     lucro_unitario:dc.lucroUn||null,
-    lucro_lote:dc.lucroUn?parseFloat((dc.lucroUn*qtd).toFixed(2)):null,
+    lucro_lote:dc.mcUn?parseFloat((dc.mcUn*qtd).toFixed(2)):null,
     receita_lote:dc.preco?parseFloat((dc.preco*qtd).toFixed(2)):null,
     desconto_maximo_pct:dc.preco&&dc.lucroUn?parseFloat((dc.lucroUn/dc.preco*100).toFixed(2)):null,
     be_unidades_mes:cfm&&mc>0?Math.ceil(cfm/mc):null,
@@ -730,7 +798,8 @@ function carregarSimulacao(i){
   const saved=JSON.parse(localStorage.getItem('precificacoes')||'[]');
   const d=saved[i];if(!d)return;
   const s=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  ['nomeEmpreendedor','nomeEmpresa','emailEmpreendedor','telefoneEmpreendedor','nomeProduto','unidade','qtdProduzir','horasProd','valorHora','aliquotaCustom'].forEach(id=>s(id,d[id]));
+  ['nomeEmpreendedor','nomeEmpresa','emailEmpreendedor','telefoneEmpreendedor','nomeProduto','unidade','qtdProduzir','vendasMensais','capacidadeMensal','lucroDesejado','horasProd','valorHora','aliquotaCustom'].forEach(id=>s(id,d[id]));
+  selecionarTipo(d.tipoOferta||'produto');
   document.getElementById('regime').value=d.regime||'0';updateImposto();
   listas.materiais=d.listas?.materiais||[];listas.variaveis=d.listas?.variaveis||[];listas.fixos=d.listas?.fixos||[];
   renderLista('materiais');renderLista('variaveis');renderLista('fixos');atualizarTotalFixo();
@@ -745,8 +814,9 @@ function carregarSimulacaoBanco(id,dadosStr){
   const d=JSON.parse(dadosStr);
   const s=(eid,v)=>{const el=document.getElementById(eid);if(el)el.value=v||'';};
   ['nomeEmpreendedor','nomeEmpresa','emailEmpreendedor','telefoneEmpreendedor',
-   'nomeProduto','unidade','qtdProduzir','horasProd','valorHora','aliquotaCustom']
+   'nomeProduto','unidade','qtdProduzir','vendasMensais','capacidadeMensal','lucroDesejado','horasProd','valorHora','aliquotaCustom']
     .forEach(fid=>s(fid,d[fid]));
+  selecionarTipo(d.tipoOferta||'produto');
   document.getElementById('regime').value=d.regime||'0';updateImposto();
   listas.materiais=d.listas?.materiais||[];
   listas.variaveis=d.listas?.variaveis||[];

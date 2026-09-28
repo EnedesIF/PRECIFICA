@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Simulador de Precificação ENEDES 2.0</title>
+<title>Simulador de Precificação ENEDES 3.0</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -16,7 +16,6 @@
   --green:#1A6B3C;--red:#d94040;--orange:#e07b20;--purple:#6a5acd;--amber:#f0a500;
 }
 body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;min-height:100vh;padding:0 0 90px;line-height:1.45}
-/* HEADER */
 header{background:#fff;border-bottom:3px solid var(--verde);position:relative;overflow:hidden;box-shadow:0 2px 12px rgba(26,107,60,.08)}
 header::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(26,107,60,.05),rgba(46,117,182,.05));pointer-events:none}
 .header-inner{display:flex;align-items:center;gap:0}
@@ -29,7 +28,6 @@ h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,5vw,40px);letter-spa
 h1 span{color:var(--verde)}
 .header-sub{margin-top:5px;font-size:12px;color:var(--muted)}
 @media(max-width:600px){.header-logo-strip{min-width:0;padding:14px 14px}.header-logo-strip svg{height:48px}.header-divider{display:none}}
-/* TOPBAR */
 .topbar{background:#fff;border-bottom:1px solid var(--border);padding:8px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:60;box-shadow:0 1px 4px rgba(0,0,0,.06)}
 .tb-btn{display:flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
 .tb-btn:hover{border-color:var(--verde);color:var(--verde);background:var(--verde-claro)}
@@ -39,7 +37,6 @@ h1 span{color:var(--verde)}
 .tb-btn.azul:hover{background:#245f95}
 .tb-btn.active{background:var(--amber);color:#3a2b00;border-color:var(--amber)}
 .tb-sep{flex:1}
-/* LAYOUT */
 .container{max-width:960px;margin:0 auto;padding:0 16px}
 .section-title{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:2px;color:var(--azul);margin-bottom:14px;display:flex;align-items:center;gap:10px}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border)}
@@ -51,7 +48,7 @@ h1 span{color:var(--verde)}
 .field label{font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--azul);display:flex;align-items:center;gap:5px}
 .field-row{display:flex;align-items:center;background:#fff;border:1.5px solid var(--border);border-radius:8px;overflow:hidden;transition:border-color .2s}
 .field-row:focus-within{border-color:var(--verde)}
-.field-prefix,.field-suffix{padding:0 11px;font-size:12px;color:var(--azul);background:var(--surface2);height:44px;display:flex;align-items:center;font-weight:600}
+.field-prefix,.field-suffix{padding:0 11px;font-size:12px;color:var(--azul);background:var(--surface2);height:44px;display:flex;align-items:center;font-weight:600;white-space:nowrap}
 .field-prefix{border-right:1px solid var(--border)}
 .field-suffix{border-left:1px solid var(--border)}
 input[type="number"],input[type="text"]{flex:1;background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;font-weight:500;padding:0 11px;height:44px;width:100%}
@@ -60,13 +57,11 @@ input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-ou
 .readonly-box{background:var(--verde-claro);border:1.5px solid var(--verde);border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:2px}
 .readonly-box .rb-num{font-family:'Bebas Neue',sans-serif;font-size:24px;color:var(--verde);line-height:1}
 .readonly-box .rb-lbl{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--muted);font-weight:700}
-/* TOOLTIP */
 .tip-ico{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--azul);color:#fff;font-size:11px;font-weight:700;cursor:pointer;flex-shrink:0;user-select:none}
 .tip-ico:hover{background:var(--verde)}
 #tipPop{position:fixed;z-index:200;max-width:280px;background:#12261a;color:#eafaef;font-size:12.5px;line-height:1.5;padding:12px 14px;border-radius:10px;box-shadow:0 8px 30px rgba(0,0,0,.28);display:none;border:1px solid var(--verde2)}
 #tipPop strong{color:#8fe0a8}
 #tipPop::after{content:'';position:absolute;left:var(--arrow,20px);top:-7px;border:7px solid transparent;border-bottom-color:#12261a;border-top:none}
-/* ITENS LISTA */
 .custo-item{display:grid;grid-template-columns:1fr auto auto;gap:8px;align-items:center;background:var(--surface2);border:1.5px solid var(--border);border-radius:8px;padding:10px 12px;margin-bottom:8px;animation:slideIn .18s ease}
 @keyframes slideIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .custo-item input{background:transparent;border:none;outline:none;color:var(--text);font-family:'DM Sans',sans-serif;font-size:14px;height:auto;padding:0}
@@ -77,7 +72,6 @@ input[type="number"]::-webkit-inner-spin-button,input[type="number"]::-webkit-ou
 .btn-del:hover{color:var(--red)}
 .btn-add{display:flex;align-items:center;gap:8px;justify-content:center;background:none;border:1.5px dashed var(--border);border-radius:8px;color:var(--muted);font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;padding:11px 14px;cursor:pointer;width:100%;transition:.2s;margin-top:4px}
 .btn-add:hover{border-color:var(--verde);color:var(--verde);background:var(--verde-claro)}
-/* MARGEM */
 .margem-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px;gap:10px;flex-wrap:wrap}
 .margem-valor{font-family:'Bebas Neue',sans-serif;font-size:40px;color:var(--azul);line-height:1}
 .margem-zona{font-size:11px;font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:5px;text-transform:uppercase}
@@ -91,11 +85,9 @@ input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.15)}
 .margem-faixa{display:flex;gap:6px;margin-top:12px;flex-wrap:wrap}
 .faixa-btn{padding:6px 12px;border-radius:20px;border:1.5px solid var(--border);background:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:600;color:var(--muted);transition:.2s}
 .faixa-btn:hover,.faixa-btn.active{background:var(--verde);border-color:var(--verde);color:#fff}
-/* BOTÃO CALCULAR */
 .btn-calc{width:100%;padding:17px;background:linear-gradient(135deg,var(--verde),var(--verde2));border:none;border-radius:11px;font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:3px;color:#fff;cursor:pointer;transition:.2s;margin-top:8px;box-shadow:0 4px 14px rgba(26,107,60,.25)}
 .btn-calc:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(26,107,60,.35)}
 .btn-calc:active{transform:translateY(0)}
-/* RESULTADO */
 .resultado-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px}
 @media(max-width:640px){.resultado-grid{grid-template-columns:1fr 1fr}}
 .res-item{background:#fff;border-radius:10px;padding:14px;border:1.5px solid var(--border);position:relative;overflow:hidden;box-shadow:0 1px 4px rgba(46,117,182,.05)}
@@ -108,7 +100,7 @@ input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.15)}
 .res-sub{font-size:11px;color:var(--muted);margin-top:3px}
 .barra-custos{background:#e6ede8;border-radius:8px;overflow:hidden;height:32px;display:flex;margin:12px 0 8px}
 .barra-seg{height:100%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;transition:width .5s cubic-bezier(.4,0,.2,1);overflow:hidden;white-space:nowrap}
-.seg-mat{background:#2E75B6;color:#fff}.seg-mdo{background:#6a5acd;color:#fff}.seg-var{background:#e07b20;color:#fff}.seg-imp{background:#d94040;color:#fff}.seg-luc{background:#1A6B3C;color:#fff}
+.seg-mat{background:#2E75B6;color:#fff}.seg-mdo{background:#6a5acd;color:#fff}.seg-var{background:#e07b20;color:#fff}.seg-imp{background:#d94040;color:#fff}.seg-luc{background:#1A6B3C;color:#fff}.seg-fix{background:#0f766e;color:#fff}.seg-dev{background:#9333ea;color:#fff}
 .legenda{display:flex;flex-wrap:wrap;gap:8px}
 .leg-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
 .leg-dot{width:10px;height:10px;border-radius:2px}
@@ -149,13 +141,17 @@ input[type="range"]::-webkit-slider-thumb:hover{transform:scale(1.15)}
 .hl-green{background:var(--verde-claro);border:1px solid rgba(26,107,60,.3);color:#12522a}
 .hl-blue{background:var(--azul-claro);border:1px solid rgba(46,117,182,.25);color:#1c4a75}
 .hl-amber{background:#fff8ed;border:1px solid var(--amber);color:#7a5200}
-.tipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px}
+.tipo-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px}
 .tipo-card{border:2px solid var(--border);border-radius:12px;padding:16px;cursor:pointer;background:#fff;transition:.2s;text-align:left;font-family:'DM Sans',sans-serif;color:var(--text)}
 .tipo-card:hover,.tipo-card.active{border-color:var(--verde);background:var(--verde-claro);box-shadow:0 4px 14px rgba(26,107,60,.12)}
 .tipo-card strong{display:block;color:var(--azul);font-size:15px;margin-bottom:4px}.tipo-card span{font-size:12px;color:var(--muted)}
 @media(max-width:600px){.tipo-grid{grid-template-columns:1fr}}
-.only-produto,.only-servico{display:none}
-/* ROSCA */
+.subtipo-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0}
+@media(max-width:600px){.subtipo-grid{grid-template-columns:1fr}}
+.subtipo-btn{border:2px solid var(--border);border-radius:10px;padding:12px;cursor:pointer;background:#fff;text-align:left;font-family:'DM Sans',sans-serif;transition:.2s}
+.subtipo-btn:hover,.subtipo-btn.active{border-color:var(--azul);background:var(--azul-claro)}
+.subtipo-btn strong{display:block;color:var(--azul);font-size:14px}.subtipo-btn span{font-size:11.5px;color:var(--muted)}
+.only-produto,.only-servico,.only-digital,.sub-assinatura,.sub-licenca{display:none}
 .rosca-wrap{display:flex;align-items:center;gap:28px;flex-wrap:wrap}
 canvas#rosca{flex-shrink:0}
 .rosca-legend{display:flex;flex-direction:column;gap:8px;flex:1;min-width:160px}
@@ -164,7 +160,6 @@ canvas#rosca{flex-shrink:0}
 .rosca-leg-label{color:var(--muted);flex:1}
 .rosca-leg-val{font-weight:600;color:var(--text)}
 .rosca-leg-pct{font-size:11px;color:var(--muted);margin-left:4px}
-/* COMPARADOR / DESCONTO */
 .comp-card{background:#fff;border:1.5px solid var(--border);border-radius:10px;padding:18px;box-shadow:0 1px 4px rgba(46,117,182,.05)}
 .comp-title{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:1px;color:var(--azul);margin-bottom:14px}
 .comp-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px}
@@ -180,7 +175,6 @@ canvas#rosca{flex-shrink:0}
 .desc-table tr:last-child td{border-bottom:none}
 .desc-table .num{font-family:'Bebas Neue',sans-serif;font-size:15px}
 .desc-table tr.zero td{background:#fff0f0}
-/* MODAL */
 .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:150;display:flex;align-items:center;justify-content:center;padding:16px}
 .modal{background:#fff;border:1px solid var(--border);border-radius:14px;padding:24px;max-width:540px;width:100%;max-height:82vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
 .modal h2{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;color:var(--azul);margin-bottom:16px}
@@ -192,7 +186,6 @@ canvas#rosca{flex-shrink:0}
 .sim-item-del{background:none;border:none;color:#888;font-size:18px;cursor:pointer;padding:4px;transition:.2s}
 .sim-item-del:hover{color:var(--red)}
 .mt{margin-top:26px}
-/* WIZARD */
 #wizardBar{display:none;background:#fff;border-bottom:1px solid var(--border);padding:10px 16px;position:sticky;top:53px;z-index:55;box-shadow:0 2px 8px rgba(0,0,0,.05)}
 .wz-steps{display:flex;gap:6px;max-width:960px;margin:0 auto;overflow-x:auto;padding-bottom:2px}
 .wz-step{flex:0 0 auto;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--muted);padding:6px 10px;border-radius:20px;cursor:pointer;white-space:nowrap;border:1.5px solid transparent}
@@ -210,7 +203,6 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
 .wz-btn.prev{background:#31463a;color:#cfe6d6}
 .wz-btn.next{background:var(--verde2);color:#fff}
 .wz-btn.exit{background:none;color:#9fb5a6;font-size:11px}
-/* FICHA / RESUMO EXECUTIVO */
 #fichaResumo{display:none}
 .ficha-head{display:flex;align-items:center;gap:14px;border-bottom:2px solid var(--verde);padding-bottom:14px;margin-bottom:16px}
 .ficha-head svg{height:52px}
@@ -221,20 +213,18 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
 .ficha-kpi .fk-lbl{font-size:10px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);font-weight:700;margin-top:4px}
 .ficha-reco{list-style:none;display:flex;flex-direction:column;gap:8px}
 .ficha-reco li{background:#fff;border:1px solid var(--border);border-left:3px solid var(--verde);border-radius:8px;padding:10px 12px;font-size:13px}
-/* PRINT */
 @media print{
   .topbar,#wizardBar,#wizardNav,#btnExport,.btn-calc,.btn-add,.btn-del,.faixa-btn,.modal-overlay,#tipPop,.tip-ico,header,.no-print{display:none!important}
   body{background:#fff!important;padding:0!important}
   .card{page-break-inside:avoid;box-shadow:none;border-color:#ccc}
   #fichaResumo{display:block!important}
-  .barra-seg,.seg-mat,.seg-mdo,.seg-var,.seg-imp,.seg-luc,.ficha-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .barra-seg,.seg-mat,.seg-mdo,.seg-var,.seg-imp,.seg-luc,.seg-fix,.seg-dev,.ficha-head{-webkit-print-color-adjust:exact;print-color-adjust:exact}
   .container{max-width:100%}
 }
 </style>
 </head>
 <body>
 
-<!-- ======= LOGO SVG ENEDES (troque por <img src="data:image/png..."> se quiser o PNG) ======= -->
 <template id="logoTpl">
 <svg viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="ENEDES · IFB">
   <circle cx="42" cy="46" r="40" fill="#1A6B3C"/>
@@ -254,9 +244,9 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
       <div class="header-logo-strip" id="logoSlot1"></div>
       <div class="header-divider"></div>
       <div class="header-content">
-        <div class="header-label">Ferramenta ENEDES · <span style="color:var(--azul)">Versão 2.0</span></div>
+        <div class="header-label">Ferramenta ENEDES · <span style="color:var(--azul)">Versão 3.0</span></div>
         <h1>SIMULADOR DE<br><span>PRECIFICAÇÃO</span></h1>
-        <p class="header-sub">Produtos & Serviços · Hora faturável · Valor percebido · Meta de renda · Break-even · Cenários</p>
+        <p class="header-sub">Produtos · Serviços · Digital/Assinatura · Hora faturável · Valor percebido · LTV · Break-even</p>
       </div>
     </div>
   </div>
@@ -292,33 +282,34 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
     <div class="section-title">02 — Natureza da Oferta</div>
     <div class="card">
       <div class="tipo-grid">
-        <button type="button" class="tipo-card active" id="tipoProdutoBtn" onclick="selecionarTipo('produto')"><strong>📦 Produto físico</strong><span>Produção, revenda, estoque, embalagem e perdas. Custo apurado por lote.</span></button>
-        <button type="button" class="tipo-card" id="tipoServicoBtn" onclick="selecionarTipo('servico')"><strong>🛠 Serviço</strong><span>Tempo faturável, taxa de ocupação e capacidade de atendimento.</span></button>
+        <button type="button" class="tipo-card active" id="tipoProdutoBtn" onclick="selecionarTipo('produto')"><strong>📦 Produto físico</strong><span>Produção, revenda, estoque, embalagem. Custo por lote.</span></button>
+        <button type="button" class="tipo-card" id="tipoServicoBtn" onclick="selecionarTipo('servico')"><strong>🛠 Serviço</strong><span>Tempo faturável, taxa de ocupação, capacidade.</span></button>
+        <button type="button" class="tipo-card" id="tipoDigitalBtn" onclick="selecionarTipo('digital')"><strong>💻 Digital / Assinatura</strong><span>Software, licença, ebook, curso, clube. Custo marginal baixo.</span></button>
       </div>
       <input type="hidden" id="tipoOferta" value="produto">
       <div class="grid-2">
-        <div class="field"><label id="labelNomeOferta">Nome do Produto <span class="tip-ico" data-tip="Nome que identifica o que você vende. Ex: 'Bolo de cenoura' (produto) ou 'Consultoria de marketing' (serviço).">?</span></label><div class="field-row"><input type="text" id="nomeProduto" placeholder="Ex: Bolo de cenoura" oninput="autoCalc()"></div></div>
-        <div class="field"><label id="labelUnidade">Unidade de venda <span class="tip-ico" data-tip="Como você cobra: por unidade, kg, caixa (produto); por atendimento, hora ou pacote (serviço).">?</span></label><div class="field-row"><input type="text" id="unidade" placeholder="Ex: unidade, kg, caixa" oninput="autoCalc()"></div></div>
+        <div class="field"><label id="labelNomeOferta">Nome do Produto <span class="tip-ico" data-tip="Nome do que você vende. Ex: 'Bolo' (produto), 'Consultoria' (serviço), 'App de gestão' (digital).">?</span></label><div class="field-row"><input type="text" id="nomeProduto" placeholder="Ex: Bolo de cenoura" oninput="autoCalc()"></div></div>
+        <div class="field"><label id="labelUnidade">Unidade de venda <span class="tip-ico" data-tip="Como você cobra: unidade/kg (produto); atendimento/hora (serviço); assinatura/licença (digital).">?</span></label><div class="field-row"><input type="text" id="unidade" placeholder="Ex: unidade, kg, caixa" oninput="autoCalc()"></div></div>
       </div>
 
       <!-- PRODUTO -->
       <div class="only-produto">
         <div class="grid-2" style="margin-top:14px">
-          <div class="field"><label>Quantidade produzida no lote <span class="tip-ico" data-tip="Quantas unidades você produz de uma vez. Serve para dividir o custo da matéria-prima e da mão de obra por unidade.">?</span></label><div class="field-row"><input type="number" id="qtdProduzir" min="1" step="1" placeholder="Ex: 50" oninput="autoCalc()"><div class="field-suffix" id="sufixoQtd">un.</div></div></div>
-          <div class="field"><label>Vendas mensais previstas <span class="tip-ico" data-tip="Quantas unidades você espera VENDER por mês. É o que separa a margem de contribuição do lucro líquido real do negócio.">?</span></label><div class="field-row"><input type="number" id="vendasMensais" min="1" step="1" placeholder="Ex: 100" oninput="autoCalc()"><div class="field-suffix">vendas</div></div></div>
-          <div class="field"><label>Capacidade máxima mensal <span class="tip-ico" data-tip="O máximo que você consegue produzir/vender por mês. Ajuda a checar se a sua meta de vendas é realista.">?</span></label><div class="field-row"><input type="number" id="capacidadeMensal" min="1" step="1" placeholder="Ex: 150" oninput="autoCalc()"><div class="field-suffix">vendas</div></div></div>
-          <div class="field"><label>Horas totais do lote <span class="tip-ico" data-tip="Tempo total gasto para produzir o lote inteiro (preparo, produção, acabamento).">?</span></label><div class="field-row"><input type="number" id="horasProd" min="0" step="0.25" placeholder="Ex: 8" oninput="autoCalc()"><div class="field-suffix">h</div></div></div>
+          <div class="field"><label>Quantidade produzida no lote <span class="tip-ico" data-tip="Quantas unidades você produz de uma vez. Serve para dividir o custo de matéria-prima e mão de obra por unidade.">?</span></label><div class="field-row"><input type="number" id="qtdProduzir" min="1" step="1" placeholder="Ex: 50" oninput="autoCalc()"><div class="field-suffix" id="sufixoQtd">un.</div></div></div>
+          <div class="field"><label>Vendas mensais previstas <span class="tip-ico" data-tip="Quantas unidades espera VENDER por mês. É a base do rateio dos custos fixos e do lucro líquido real.">?</span></label><div class="field-row"><input type="number" id="vendasMensais" min="1" step="1" placeholder="Ex: 100" oninput="autoCalc()"><div class="field-suffix">vendas</div></div></div>
+          <div class="field"><label>Capacidade máxima mensal <span class="tip-ico" data-tip="O máximo que consegue produzir/vender por mês. Checa se sua meta é realista.">?</span></label><div class="field-row"><input type="number" id="capacidadeMensal" min="1" step="1" placeholder="Ex: 150" oninput="autoCalc()"><div class="field-suffix">vendas</div></div></div>
+          <div class="field"><label>Horas totais do lote <span class="tip-ico" data-tip="Tempo total para produzir o lote inteiro (preparo, produção, acabamento).">?</span></label><div class="field-row"><input type="number" id="horasProd" min="0" step="0.25" placeholder="Ex: 8" oninput="autoCalc()"><div class="field-suffix">h</div></div></div>
         </div>
       </div>
 
-      <!-- SERVIÇO: capacidade e hora faturável -->
+      <!-- SERVIÇO -->
       <div class="only-servico">
-        <div class="info-box" style="margin-top:14px">🛠 <strong>Precificação de serviço é diferente de produto.</strong> Você não vende "unidades", vende o seu <strong>tempo faturável</strong>. Nem toda hora trabalhada é vendável — parte vai para prospecção, administrativo e deslocamento. Por isso calculamos sua <strong>hora faturável real</strong> abaixo.</div>
+        <div class="info-box" style="margin-top:14px">🛠 <strong>Serviço vende tempo faturável, não "unidades".</strong> Nem toda hora trabalhada é vendável — parte vai para prospecção, administrativo e deslocamento. Por isso calculamos sua <strong>hora faturável real</strong>.</div>
         <div class="grid-2" style="margin-top:14px">
-          <div class="field"><label>Horas disponíveis por mês <span class="tip-ico" data-tip="Quantas horas por mês você pode dedicar ao trabalho. Referência: 160h (8h × 20 dias) para dedicação integral; ajuste à sua realidade.">?</span></label><div class="field-row"><input type="number" id="horasDisponiveis" min="1" step="1" value="160" oninput="autoCalc()"><div class="field-suffix">h/mês</div></div></div>
-          <div class="field"><label>Taxa de ocupação faturável (%) <span class="tip-ico" data-tip="Do total de horas, quantas você realmente CONSEGUE cobrar do cliente. Autônomos costumam faturar 40–60% do tempo — o resto é prospecção, orçamentos, deslocamento e administração.">?</span></label><div class="field-row"><input type="number" id="taxaOcupacao" min="1" max="100" step="1" value="50" oninput="autoCalc()"><div class="field-suffix">%</div></div></div>
-          <div class="field"><label>Horas por atendimento <span class="tip-ico" data-tip="Quanto tempo, em média, dura cada atendimento/serviço (incluindo preparo e pós-atendimento).">?</span></label><div class="field-row"><input type="number" id="horasAtendimento" min="0.25" step="0.25" placeholder="Ex: 2" oninput="autoCalc()"><div class="field-suffix">h</div></div></div>
-          <div class="field"><label>Atendimentos mensais previstos <span class="tip-ico" data-tip="Quantos atendimentos você espera realizar por mês. Deixe em branco para o sistema estimar pela sua capacidade faturável.">?</span></label><div class="field-row"><input type="number" id="vendasMensaisServ" min="1" step="1" placeholder="auto" oninput="autoCalc()"><div class="field-suffix">atend.</div></div></div>
+          <div class="field"><label>Horas disponíveis por mês <span class="tip-ico" data-tip="Horas/mês que pode dedicar ao trabalho. Referência: 160h (8h × 20 dias) para dedicação integral.">?</span></label><div class="field-row"><input type="number" id="horasDisponiveis" min="1" step="1" value="160" oninput="autoCalc()"><div class="field-suffix">h/mês</div></div></div>
+          <div class="field"><label>Taxa de ocupação faturável (%) <span class="tip-ico" data-tip="Do total de horas, quantas você realmente cobra do cliente. Autônomos faturam 40–60%; o resto é prospecção, orçamentos e administração.">?</span></label><div class="field-row"><input type="number" id="taxaOcupacao" min="1" max="100" step="1" value="50" oninput="autoCalc()"><div class="field-suffix">%</div></div></div>
+          <div class="field"><label>Horas por atendimento <span class="tip-ico" data-tip="Duração média de cada atendimento (incluindo preparo e pós-atendimento).">?</span></label><div class="field-row"><input type="number" id="horasAtendimento" min="0.25" step="0.25" placeholder="Ex: 2" oninput="autoCalc()"><div class="field-suffix">h</div></div></div>
+          <div class="field"><label>Atendimentos mensais previstos <span class="tip-ico" data-tip="Quantos atendimentos espera realizar/mês. Em branco = o sistema estima pela capacidade faturável.">?</span></label><div class="field-row"><input type="number" id="vendasMensaisServ" min="1" step="1" placeholder="auto" oninput="autoCalc()"><div class="field-suffix">atend.</div></div></div>
         </div>
         <div class="grid-2" style="margin-top:14px">
           <div class="readonly-box"><span class="rb-lbl">Horas faturáveis / mês</span><span class="rb-num" id="rbHorasFat">80 h</span></div>
@@ -326,7 +317,37 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
         </div>
       </div>
 
-      <div class="field" style="margin-top:14px"><label>Lucro/meta mensal desejado (opcional) <span class="tip-ico" data-tip="Se preencher, o sistema calcula o preço necessário para você atingir essa meta com as vendas previstas (modo meta de renda). Deixe 0 para usar a margem do slider.">?</span></label><div class="field-row" style="max-width:260px"><div class="field-prefix">R$</div><input type="number" id="lucroDesejado" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
+      <!-- DIGITAL -->
+      <div class="only-digital">
+        <div class="subtipo-grid">
+          <button type="button" class="subtipo-btn active" id="btnAssinatura" onclick="selecionarDigitalSub('assinatura')"><strong>🔁 Assinatura recorrente</strong><span>SaaS, clube, área de membros. Receita mensal por assinante.</span></button>
+          <button type="button" class="subtipo-btn" id="btnLicenca" onclick="selecionarDigitalSub('licenca')"><strong>🎫 Licença / venda única</strong><span>Ebook, template, curso gravado, software perpétuo.</span></button>
+        </div>
+        <input type="hidden" id="digitalSubtipo" value="assinatura">
+
+        <!-- ASSINATURA -->
+        <div class="sub-assinatura">
+          <div class="info-box" style="margin-top:0">🔁 <strong>Na assinatura, o preço é por assinante/mês.</strong> O custo marginal costuma ser baixo (servidor, gateway, suporte). Sua saúde financeira depende de <strong>quantos assinantes ativos</strong> você tem e de quanto tempo eles permanecem (churn → LTV).</div>
+          <div class="grid-2" style="margin-top:14px">
+            <div class="field"><label>Ciclo de cobrança <span class="tip-ico" data-tip="Mensal ou anual. No anual, é comum oferecer desconto (ex.: '2 meses grátis') para reduzir o churn e antecipar caixa.">?</span></label><div class="field-row"><select class="fsel" id="cicloDigital" onchange="autoCalc()"><option value="mensal">Mensal</option><option value="anual">Anual</option></select></div></div>
+            <div class="field"><label>Assinantes ativos previstos <span class="tip-ico" data-tip="Número de assinantes pagantes ativos por mês. É a base do rateio dos custos fixos (desenvolvimento, servidores, equipe).">?</span></label><div class="field-row"><input type="number" id="assinantes" min="1" step="1" placeholder="Ex: 200" oninput="autoCalc()"><div class="field-suffix">assinantes</div></div></div>
+            <div class="field"><label>Churn mensal (%) — opcional <span class="tip-ico" data-tip="Percentual de assinantes que cancelam por mês. 5% de churn = permanência média de 20 meses. Usado para calcular o LTV (valor do cliente ao longo do tempo).">?</span></label><div class="field-row"><input type="number" id="churn" min="0" max="100" step="0.1" placeholder="Ex: 5" oninput="autoCalc()"><div class="field-suffix">%/mês</div></div></div>
+            <div class="field"><label>CAC — custo de aquisição por cliente (opcional) <span class="tip-ico" data-tip="Quanto você gasta em marketing/vendas para conquistar 1 assinante. A relação LTV:CAC ideal é ≥ 3 (você recupera 3× o que investiu para adquirir o cliente).">?</span></label><div class="field-row"><div class="field-prefix">R$</div><input type="number" id="cac" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
+          </div>
+        </div>
+
+        <!-- LICENÇA -->
+        <div class="sub-licenca">
+          <div class="info-box" style="margin-top:0">🎫 <strong>Na venda única, o grande custo é o desenvolvimento</strong> (feito uma vez). Ele é <strong>diluído</strong> pelas vendas previstas. Quanto mais você vende, menor o custo por unidade e maior o lucro — o custo marginal de cada cópia é quase zero.</div>
+          <div class="grid-2" style="margin-top:14px">
+            <div class="field"><label>Custo total de desenvolvimento <span class="tip-ico" data-tip="Quanto custou (ou custará) CRIAR o produto: horas de desenvolvimento, design, gravação, revisão. É um custo único, não mensal.">?</span></label><div class="field-row"><div class="field-prefix">R$</div><input type="number" id="custoDev" min="0" step="0.01" placeholder="Ex: 8000" oninput="autoCalc()"></div></div>
+            <div class="field"><label>Vendas mensais previstas <span class="tip-ico" data-tip="Quantas licenças/cópias espera vender por mês. Base do rateio dos custos fixos.">?</span></label><div class="field-row"><input type="number" id="vendasMensaisDig" min="1" step="1" placeholder="Ex: 40" oninput="autoCalc()"><div class="field-suffix">vendas</div></div></div>
+            <div class="field"><label>Horizonte de amortização <span class="tip-ico" data-tip="Em quantos meses você quer recuperar o investimento em desenvolvimento. Ex: 12 meses. O sistema dilui o custo de dev pelas vendas desse período.">?</span></label><div class="field-row"><input type="number" id="horizonteAmort" min="1" step="1" value="12" oninput="autoCalc()"><div class="field-suffix">meses</div></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field" style="margin-top:14px"><label>Lucro/meta mensal desejado (opcional) <span class="tip-ico" data-tip="Se preencher, o sistema calcula o preço necessário para atingir essa meta com o volume previsto. Deixe 0 para usar a margem do slider.">?</span></label><div class="field-row" style="max-width:260px"><div class="field-prefix">R$</div><input type="number" id="lucroDesejado" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
     </div>
   </div>
 
@@ -334,13 +355,14 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
   <div class="mt wz-target" data-step="2" id="secFixos">
     <div class="section-title">03 — Custos Fixos Mensais</div>
     <div class="card">
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Itens que você paga todo mês <strong>independente de quanto produz/atende</strong> — aluguel, energia, internet, contador, salários fixos, softwares. <span class="tip-ico" data-tip="Custos fixos NÃO mudam com o volume. Eles são rateados entre suas vendas mensais para chegar ao lucro líquido real e ao ponto de equilíbrio.">?</span></p>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Itens que você paga <strong>todo mês</strong>, independente do volume — aluguel, energia, internet, contador, servidores, salários fixos, softwares. <span class="tip-ico" data-tip="Lance sempre o VALOR MENSAL de cada item (custos fixos não mudam com o volume). O sistema soma tudo, divide pelas VENDAS MENSAIS previstas e embute essa fração no preço de cada unidade — é o chamado RATEIO. Exemplo: R$ 2.000 de custo fixo ÷ 100 vendas no mês = R$ 20 acrescentados ao preço de cada unidade. Consequência importante: quanto maior o volume de vendas, menor o peso do fixo em cada venda; por isso a previsão de vendas precisa ser realista — se você superestimar, o preço sai baixo demais para cobrir os custos.">?</span></p>
       <div id="listaCustosFixos"></div>
       <button class="btn-add" onclick="addItem('fixos')">＋ Adicionar item fixo</button>
       <div style="display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:12px;border-top:1.5px solid var(--border)">
         <span style="font-size:12px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--azul)">Total Custo Fixo Mensal</span>
         <span id="totalCustoFixoDisplay" style="font-family:'Bebas Neue',sans-serif;font-size:26px;color:var(--verde)">R$ 0,00</span>
       </div>
+      <div class="info-box">🧮 <strong>Como o fixo entra no preço (rateio):</strong> você informa o valor <u>mensal</u>. O sistema divide o total pelas <strong>vendas mensais previstas</strong> e soma essa fração ao preço de cada unidade. Ex.: R$ 2.000 de fixo ÷ 100 vendas = <strong>R$ 20 por unidade</strong>. Por isso, quanto maior o volume, menor o peso do fixo em cada venda — e mais realista precisa ser sua previsão de vendas.</div>
     </div>
   </div>
 
@@ -349,11 +371,11 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
     <div class="section-title">04 — Regime Tributário</div>
     <div class="card">
       <div class="grid-2">
-        <div class="field"><label>Regime <span class="tip-ico" data-tip="Escolha o enquadramento fiscal do seu negócio. Se você é informal, selecione 'Sem imposto'. MEI e Simples têm alíquotas diferentes para comércio, indústria e serviços.">?</span></label><div class="field-row"><select class="fsel" id="regime" onchange="updateImposto()"><option value="0">Sem imposto / Informal</option><option value="4">MEI — Comércio/Indústria (4%)</option><option value="6">MEI — Serviços (6%)</option><option value="6">Simples Nacional — Comércio (~6%)</option><option value="11.28">Simples Nacional — Serviços (~11,28%)</option><option value="custom">Alíquota personalizada</option></select></div></div>
+        <div class="field"><label>Regime <span class="tip-ico" data-tip="Enquadramento fiscal. Informal? 'Sem imposto'. As alíquotas do Simples são aproximadas e variam por faixa de faturamento e anexo — confirme com seu contador.">?</span></label><div class="field-row"><select class="fsel" id="regime" onchange="updateImposto()"><option value="0">Sem imposto / Informal</option><option value="4">MEI — Comércio/Indústria (4%)</option><option value="6">MEI — Serviços (6%)</option><option value="6">Simples Nacional — Comércio (~6%)</option><option value="11.28">Simples Nacional — Serviços (~11,28%)</option><option value="custom">Alíquota personalizada</option></select></div></div>
         <div class="field" id="campoCustom" style="display:none"><label>Alíquota personalizada</label><div class="field-row"><input type="number" id="aliquotaCustom" min="0" max="99" step="0.1" placeholder="Ex: 8.5" oninput="updateImposto()"><div class="field-suffix">%</div></div></div>
         <div class="field"><label>Alíquota Efetiva</label><div class="field-row" style="background:var(--verde-claro)"><input type="text" id="aliquotaDisplay" readonly style="color:var(--verde);font-weight:700;cursor:default"><div class="field-suffix">%</div></div></div>
       </div>
-      <div class="info-box">⚠️ O imposto é calculado <strong>sobre o preço de venda</strong> (por dentro), como acontece na prática. Por isso ele entra na fórmula "elevando" o preço final.</div>
+      <div class="info-box">⚠️ Imposto calculado <strong>sobre o preço de venda</strong> (por dentro), como na prática.</div>
     </div>
   </div>
 
@@ -367,14 +389,14 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
     </div>
   </div>
 
-  <!-- 06 MÃO DE OBRA / VALOR-HORA -->
+  <!-- 06 MÃO DE OBRA -->
   <div class="mt wz-target" data-step="5" id="secMaoObra">
     <div class="section-title" id="tituloMaoObra">06 — Mão de Obra / Valor da Hora</div>
     <div class="card">
-      <div class="info-box" style="margin-top:0;margin-bottom:14px">💡 <strong>Quanto vale sua hora?</strong> Use o salário mínimo como piso de referência. Salário mínimo 2026 = <strong>R$ 1.621,00</strong> → dividido por 220h (jornada mensal CLT) = <strong id="minHoraTxt">R$ 7,37</strong>/hora. Cobrar abaixo disso significa ganhar menos que um piso trabalhista. <span class="tip-ico" data-tip="O salário mínimo/220h é apenas o PISO legal de referência — não o valor justo do seu trabalho. Profissionais qualificados cobram 2× a 5× esse piso. Confirme o salário mínimo vigente, pois ele muda todo ano.">?</span></div>
+      <div class="info-box" style="margin-top:0;margin-bottom:14px">💡 <strong>Quanto vale sua hora?</strong> Salário mínimo 2026 = <strong>R$ 1.621,00</strong> ÷ 220h (jornada mensal CLT) = <strong id="minHoraTxt">R$ 7,37</strong>/hora. Esse é o <strong>piso</strong> — trabalho qualificado vale 2× a 5× isso. <span class="tip-ico" data-tip="O salário mínimo/220h é apenas o PISO legal de referência, não o valor justo do seu trabalho. Confirme o mínimo vigente, pois muda todo ano.">?</span></div>
       <div class="grid-2">
-        <div class="field"><label>Salário mínimo de referência <span class="tip-ico" data-tip="Valor oficial vigente. Editável — atualize quando o governo reajustar (todo mês de janeiro).">?</span></label><div class="field-row" style="max-width:220px"><div class="field-prefix">R$</div><input type="number" id="salarioMinimo" min="0" step="1" value="1621" oninput="updateMinHora()"></div></div>
-        <div class="field"><label>Valor da sua hora <span class="tip-ico" data-tip="Quanto você quer receber por hora de trabalho efetivo. Use os botões de múltiplos do mínimo como ponto de partida e ajuste ao seu mercado.">?</span></label><div class="field-row" style="max-width:220px"><div class="field-prefix">R$</div><input type="number" id="valorHora" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
+        <div class="field"><label>Salário mínimo de referência <span class="tip-ico" data-tip="Valor oficial vigente. Editável — atualize quando o governo reajustar (janeiro).">?</span></label><div class="field-row" style="max-width:220px"><div class="field-prefix">R$</div><input type="number" id="salarioMinimo" min="0" step="1" value="1621" oninput="updateMinHora()"></div></div>
+        <div class="field"><label>Valor da sua hora <span class="tip-ico" data-tip="Quanto quer receber por hora de trabalho efetivo. Use os múltiplos do mínimo como ponto de partida.">?</span></label><div class="field-row" style="max-width:220px"><div class="field-prefix">R$</div><input type="number" id="valorHora" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
       </div>
       <div class="margem-faixa" style="margin-top:6px">
         <span style="font-size:11px;color:var(--muted);align-self:center;margin-right:4px">Sugestões:</span>
@@ -383,28 +405,28 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
         <button class="faixa-btn" onclick="aplicarMultiploHora(3)">3× mínimo</button>
         <button class="faixa-btn" onclick="aplicarMultiploHora(5)">5× mínimo</button>
       </div>
-      <div class="info-box" id="dicaMaoObra">💡 Inclua seu próprio tempo de produção. O valor da hora × as horas informadas na seção 02 compõem a mão de obra direta.</div>
+      <div class="info-box" id="dicaMaoObra">💡 O valor da hora × as horas informadas na seção 02 compõem a mão de obra direta.</div>
       <div class="hl-box hl-amber" id="alertaPisoHora" style="display:none;margin-top:12px"></div>
     </div>
   </div>
 
   <!-- 07 CUSTOS VARIÁVEIS -->
   <div class="mt wz-target" data-step="6" id="secVariaveis">
-    <div class="section-title">07 — Custos Variáveis por Unidade</div>
+    <div class="section-title" id="tituloVariaveis">07 — Custos Variáveis por Unidade</div>
     <div class="card">
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Custos que <strong>variam a cada venda</strong> — embalagem, frete, comissão, taxa de maquininha/marketplace, deslocamento por atendimento. Valor <strong>por unidade/atendimento</strong>. <span class="tip-ico" data-tip="Diferente do custo fixo: o variável só existe quando há uma venda. Ex: cada bolo vendido gasta 1 embalagem; cada atendimento gasta X de combustível.">?</span></p>
+      <p id="textoVariaveis" style="font-size:12.5px;color:var(--muted);margin-bottom:12px">Custos que <strong>variam a cada venda</strong> — embalagem, frete, comissão, taxa de maquininha/marketplace. Valor <strong>por unidade</strong>. <span class="tip-ico" data-tip="Diferente do fixo: o variável só existe quando há uma venda.">?</span></p>
       <div id="listaCustosVariaveis"></div>
       <button class="btn-add" onclick="addItem('variaveis')">＋ Adicionar</button>
     </div>
   </div>
 
-  <!-- 08 VALOR PERCEBIDO / MERCADO -->
+  <!-- 08 VALOR PERCEBIDO -->
   <div class="mt wz-target" data-step="7" id="secMercado">
     <div class="section-title">08 — Preço de Mercado (Valor Percebido)</div>
     <div class="card">
-      <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Quanto a concorrência cobra por algo parecido? O preço ideal cobre seus custos; o preço de mercado revela se você pode <strong>cobrar mais</strong> (e lucrar mais) ou se precisa <strong>rever custos/posicionamento</strong>. <span class="tip-ico" data-tip="Precificar só pelo custo pode deixar dinheiro na mesa. Se o mercado paga mais do que o seu preço mínimo, a diferença é lucro extra que você pode capturar com posicionamento e valor percebido.">?</span></p>
+      <p style="font-size:12.5px;color:var(--muted);margin-bottom:14px">Quanto a concorrência cobra por algo parecido? Revela se você pode <strong>cobrar mais</strong> ou se precisa <strong>rever custos/posicionamento</strong>. <span class="tip-ico" data-tip="Precificar só pelo custo pode deixar dinheiro na mesa. Se o mercado paga mais que seu preço mínimo, a diferença é lucro extra.">?</span></p>
       <div class="grid-2">
-        <div class="field"><label>Preço médio da concorrência <span class="tip-ico" data-tip="Pesquise 3 a 5 concorrentes e informe a média. Opcional, mas muito útil.">?</span></label><div class="field-row" style="max-width:240px"><div class="field-prefix">R$</div><input type="number" id="precoMercado" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
+        <div class="field"><label>Preço médio da concorrência <span class="tip-ico" data-tip="Pesquise 3 a 5 concorrentes e informe a média. Opcional.">?</span></label><div class="field-row" style="max-width:240px"><div class="field-prefix">R$</div><input type="number" id="precoMercado" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
       </div>
     </div>
   </div>
@@ -414,7 +436,7 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
     <div class="section-title">09 — Margem Líquida Desejada</div>
     <div class="card">
       <div class="margem-header">
-        <div><div style="font-size:11px;color:var(--muted);margin-bottom:2px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Margem sobre a receita <span class="tip-ico" data-tip="Percentual da receita que sobra como margem depois dos custos variáveis, imposto e rateio dos fixos. NÃO é markup (multiplicador). 30% é um bom equilíbrio para a maioria dos negócios.">?</span></div><div class="margem-valor" id="margemDisplay">30%</div></div>
+        <div><div style="font-size:11px;color:var(--muted);margin-bottom:2px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Margem sobre a receita <span class="tip-ico" data-tip="Percentual da receita que sobra depois de custos variáveis, imposto e rateio dos fixos. Não é markup.">?</span></div><div class="margem-valor" id="margemDisplay">30%</div></div>
         <div class="margem-zona zona-ok" id="zonaLabel">✓ Faixa Recomendada</div>
       </div>
       <input type="range" id="sliderMargem" min="5" max="60" value="30" oninput="updateMargem(this.value);autoCalc()" style="--pct:47.3%">
@@ -430,7 +452,7 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
 
   <button class="btn-calc" onclick="calcular()">▶ CALCULAR PREÇO DE VENDA</button>
 
-  <!-- FICHA RESUMO (impressão) -->
+  <!-- FICHA RESUMO -->
   <div id="fichaResumo" class="mt">
     <div class="card">
       <div class="ficha-head"><span id="logoSlot2"></span><div><div style="font-family:'Bebas Neue';font-size:24px;letter-spacing:1px;color:var(--azul)">FICHA DE PRECIFICAÇÃO</div><div style="font-size:12px;color:var(--muted)" id="fichaSub">—</div></div></div>
@@ -447,18 +469,19 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
     <div class="card">
       <div id="alertas" style="margin-bottom:14px"></div>
       <div class="resultado-grid">
-        <div class="res-item"><div class="res-label">Custo/unidade</div><div class="res-valor" id="resCusto">—</div><div class="res-sub">sem impostos</div></div>
+        <div class="res-item"><div class="res-label">Custo/unidade</div><div class="res-valor" id="resCusto">—</div><div class="res-sub" id="resCustoSub">sem impostos</div></div>
         <div class="res-item destaque"><div class="res-label">💰 Preço de Venda</div><div class="res-valor" id="resPreco">—</div><div class="res-sub" id="resProdutoSub">—</div></div>
         <div class="res-item"><div class="res-label">Imposto/unidade</div><div class="res-valor" id="resImposto" style="color:var(--red)">—</div><div class="res-sub" id="resImpostoSub">—</div></div>
         <div class="res-item"><div class="res-label">Margem de contribuição</div><div class="res-valor" id="resLucro" style="color:var(--green)">—</div><div class="res-sub" id="resLucroSub">—</div></div>
       </div>
       <div class="resultado-grid">
-        <div class="res-item"><div class="res-label">MC percentual</div><div class="res-valor" id="resMcPct">—</div><div class="res-sub">sobre o preço</div></div>
+        <div class="res-item"><div class="res-label">Custo fixo rateado/un.</div><div class="res-valor" id="resRateio" style="color:#0f766e">—</div><div class="res-sub" id="resRateioSub">—</div></div>
         <div class="res-item"><div class="res-label">Lucro líquido mensal</div><div class="res-valor" id="resLucroMensal">—</div><div class="res-sub" id="resLucroMensalSub">—</div></div>
         <div class="res-item"><div class="res-label">Margem líquida real</div><div class="res-valor" id="resMargemLiquida">—</div><div class="res-sub">após custos fixos</div></div>
         <div class="res-item"><div class="res-label">Markup multiplicador</div><div class="res-valor" id="resMarkup">—</div><div class="res-sub">preço ÷ custo</div></div>
       </div>
       <div class="hl-box hl-green" id="resLoteInfo"></div>
+      <div class="hl-box hl-blue" id="resRateioInfo"></div>
       <div class="hl-box hl-blue" id="resDescontoInfo"></div>
       <div class="hl-box hl-amber" id="resMercadoInfo" style="display:none"></div>
       <div style="font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:700;letter-spacing:.5px;text-transform:uppercase">Composição do preço</div>
@@ -469,11 +492,20 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
     </div>
   </div>
 
-  <!-- MODO META DE RENDA -->
-  <div id="metaBloco" style="display:none" class="mt no-print">
-    <div class="section-title">11 — Modo Meta de Renda (Pró-labore)</div>
+  <!-- MÉTRICAS DIGITAIS -->
+  <div id="digitalBloco" style="display:none" class="mt no-print">
+    <div class="section-title" id="digitalTitulo">11 — Métricas Digitais</div>
     <div class="card">
-      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Cálculo reverso: informe quanto quer <strong>ganhar por mês</strong> e veja de quantas vendas/atendimentos precisa — mantendo o preço calculado — ou quanto teria de cobrar mantendo o volume atual.</p>
+      <div class="be-cards" id="digitalCards"></div>
+      <div class="dica" id="dicaDigital"></div>
+    </div>
+  </div>
+
+  <!-- META DE RENDA -->
+  <div id="metaBloco" style="display:none" class="mt no-print">
+    <div class="section-title">12 — Modo Meta de Renda (Pró-labore)</div>
+    <div class="card">
+      <p style="font-size:13px;color:var(--muted);margin-bottom:14px">Cálculo reverso: informe quanto quer <strong>ganhar por mês</strong> e veja de quantas vendas precisa — mantendo o preço — ou quanto cobrar mantendo o volume.</p>
       <div class="field" style="max-width:260px;margin-bottom:14px"><label>Quero ganhar por mês</label><div class="field-row"><div class="field-prefix">R$</div><input type="number" id="metaRenda" min="0" step="0.01" placeholder="Ex: 4000" oninput="renderMeta()"></div></div>
       <div class="be-cards" id="metaCards"></div>
       <div class="dica" id="dicaMeta" style="display:none"></div>
@@ -482,7 +514,7 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
 
   <!-- DESCONTO -->
   <div id="descontoBloco" style="display:none" class="mt no-print">
-    <div class="section-title">12 — Simulador de Desconto Progressivo</div>
+    <div class="section-title">13 — Simulador de Desconto Progressivo</div>
     <div class="card">
       <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Impacto de cada desconto no lucro — por unidade e no resultado mensal.</p>
       <table class="desc-table" id="tabelaDesconto"></table>
@@ -492,7 +524,7 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
 
   <!-- COMPARADOR -->
   <div id="comparadorBloco" style="display:none" class="mt no-print">
-    <div class="section-title">13 — Comparador (A vs B)</div>
+    <div class="section-title">14 — Comparador (A vs B)</div>
     <div class="card">
       <p style="font-size:13px;color:var(--muted);margin-bottom:16px">Compare o item atual (A) com outra oferta (B).</p>
       <div class="grid-2" style="margin-bottom:16px">
@@ -508,7 +540,7 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
 
   <!-- BREAK-EVEN -->
   <div id="breakEvenBloco" style="display:none" class="mt no-print">
-    <div class="section-title">14 — Ponto de Equilíbrio (Break-Even)</div>
+    <div class="section-title">15 — Ponto de Equilíbrio (Break-Even)</div>
     <div class="card">
       <div class="be-cards">
         <div class="be-card"><div class="be-num" id="beUnidades">—</div><div class="be-label" id="beUnidadesLbl">unidades/mês</div><div class="be-sub">para cobrir custos fixos</div></div>
@@ -521,22 +553,21 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
 
   <!-- CENÁRIOS -->
   <div id="cenariosBloco" style="display:none" class="mt no-print">
-    <div class="section-title">15 — Cenários</div>
+    <div class="section-title">16 — Cenários</div>
     <div class="card">
       <p style="font-size:12px;color:var(--muted);margin-bottom:14px">±20% no volume · ±10% no custo de insumos.</p>
       <div class="cenarios-grid" id="cenariosGrid"></div>
     </div>
   </div>
 
-  <!-- TABELA MARGENS -->
+  <!-- TABELA -->
   <div id="tabelaBloco" style="display:none" class="mt no-print">
-    <div class="section-title">16 — Simulação de Margens</div>
+    <div class="section-title">17 — Simulação de Margens</div>
     <div class="card" style="overflow-x:auto"><table class="tabela" id="tabela"></table></div>
     <div class="dica" id="dica"></div>
   </div>
 </div>
 
-<!-- MODAL -->
 <div class="modal-overlay" id="modalOverlay" style="display:none" onclick="if(event.target===this)fecharModal()">
   <div class="modal">
     <h2>📂 Simulações Salvas</h2>
@@ -545,15 +576,12 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
   </div>
 </div>
 
-<!-- WIZARD NAV + TOOLTIP -->
 <div id="wizardNav"><div class="wz-tip" id="wzTip"></div><div class="wz-actions"><button class="wz-btn exit" onclick="toggleWizard()">✕ Sair do assistente</button><div style="display:flex;gap:8px"><button class="wz-btn prev" onclick="wizardStep(-1)">‹ Anterior</button><button class="wz-btn next" id="wzNextBtn" onclick="wizardStep(1)">Próximo ›</button></div></div></div>
 <div id="tipPop"></div>
 
 <script>
-/* ===== LOGO ===== */
 (function(){const t=document.getElementById('logoTpl').innerHTML;document.getElementById('logoSlot1').innerHTML=t;document.getElementById('logoSlot2').innerHTML=t;})();
 
-/* ===== ESTADO ===== */
 const listas={materiais:[],variaveis:[],fixos:[]};
 const listaIds={materiais:'listaMateriais',variaveis:'listaCustosVariaveis',fixos:'listaCustosFixos'};
 let margemAtual=30,aliquotaAtual=0,jaCalculou=false,autoTimer=null,dadosCalc=null;
@@ -561,67 +589,90 @@ let margemAtual=30,aliquotaAtual=0,jaCalculou=false,autoTimer=null,dadosCalc=nul
 document.addEventListener('DOMContentLoaded',()=>{
   addItem('materiais');addItem('variaveis');addItem('fixos');
   selecionarTipo('produto');updateMargem(30);updateImposto();atualizarTotalFixo();updateMinHora();
-  toggleWizard(); // inicia em modo assistente (pode sair)
+  toggleWizard();
 });
 
-/* ===== TOOLTIPS ===== */
+/* TOOLTIP */
 const tipPop=document.getElementById('tipPop');
 document.addEventListener('click',e=>{
   const ico=e.target.closest('.tip-ico');
   if(ico){e.stopPropagation();const txt=ico.getAttribute('data-tip');const r=ico.getBoundingClientRect();
     tipPop.innerHTML=txt;tipPop.style.display='block';
-    let left=r.left-16,top=r.bottom+10;
-    const pw=Math.min(280,window.innerWidth-24);tipPop.style.maxWidth=pw+'px';
-    if(left+pw>window.innerWidth-12)left=window.innerWidth-12-pw;
-    if(left<12)left=12;
-    tipPop.style.left=left+'px';tipPop.style.top=top+'px';
-    tipPop.style.setProperty('--arrow',(r.left-left+2)+'px');
+    let left=r.left-16,top=r.bottom+10;const pw=Math.min(280,window.innerWidth-24);tipPop.style.maxWidth=pw+'px';
+    if(left+pw>window.innerWidth-12)left=window.innerWidth-12-pw;if(left<12)left=12;
+    tipPop.style.left=left+'px';tipPop.style.top=top+'px';tipPop.style.setProperty('--arrow',(r.left-left+2)+'px');
   } else if(!e.target.closest('#tipPop')){tipPop.style.display='none';}
 });
 
-/* ===== TIPO ===== */
+/* TIPO */
 function selecionarTipo(tipo){
   document.getElementById('tipoOferta').value=tipo;
   document.getElementById('tipoProdutoBtn').classList.toggle('active',tipo==='produto');
   document.getElementById('tipoServicoBtn').classList.toggle('active',tipo==='servico');
-  const serv=tipo==='servico';
-  document.querySelectorAll('.only-produto').forEach(el=>el.style.display=serv?'none':'block');
+  document.getElementById('tipoDigitalBtn').classList.toggle('active',tipo==='digital');
+  const serv=tipo==='servico',dig=tipo==='digital';
+  document.querySelectorAll('.only-produto').forEach(el=>el.style.display=(tipo==='produto')?'block':'none');
   document.querySelectorAll('.only-servico').forEach(el=>el.style.display=serv?'block':'none');
-  document.getElementById('labelNomeOferta').firstChild.textContent=serv?'Nome do serviço ':'Nome do Produto ';
-  document.getElementById('nomeProduto').placeholder=serv?'Ex: Consultoria de marketing':'Ex: Bolo de cenoura';
-  document.getElementById('labelUnidade').firstChild.textContent=serv?'Unidade de cobrança ':'Unidade de venda ';
-  document.getElementById('unidade').placeholder=serv?'Ex: atendimento, hora, pacote':'Ex: unidade, kg, caixa';
+  document.querySelectorAll('.only-digital').forEach(el=>el.style.display=dig?'block':'none');
+  // Seções 05 e 06 não se aplicam a digital
+  document.getElementById('secMateriais').style.display=dig?'none':'block';
+  document.getElementById('secMaoObra').style.display=dig?'none':'block';
+  // Rótulos
+  const nome=document.getElementById('labelNomeOferta').firstChild;
+  nome.textContent=dig?'Nome do produto digital ':serv?'Nome do serviço ':'Nome do Produto ';
+  document.getElementById('nomeProduto').placeholder=dig?'Ex: App de gestão / Ebook':serv?'Ex: Consultoria de marketing':'Ex: Bolo de cenoura';
+  document.getElementById('labelUnidade').firstChild.textContent=dig?'Unidade de cobrança ':serv?'Unidade de cobrança ':'Unidade de venda ';
+  document.getElementById('unidade').placeholder=dig?'Ex: assinatura, licença':serv?'Ex: atendimento, hora':'Ex: unidade, kg, caixa';
   document.getElementById('tituloMateriais').textContent=serv?'05 — Insumos Diretos do Serviço':'05 — Matéria-Prima / Mercadorias';
-  document.getElementById('textoMateriais').innerHTML=serv?'Materiais e terceiros usados <strong>por atendimento</strong> (impressões, produtos aplicados, licenças por cliente).':'Custo <strong>total do lote</strong> — mercadoria, matéria-prima, ingredientes e perdas.';
+  document.getElementById('textoMateriais').innerHTML=serv?'Materiais e terceiros usados <strong>por atendimento</strong>.':'Custo <strong>total do lote</strong> — mercadoria, matéria-prima, ingredientes e perdas.';
   document.getElementById('tituloMaoObra').textContent=serv?'06 — Tempo Faturável / Valor da Hora':'06 — Mão de Obra / Valor da Hora';
-  document.getElementById('dicaMaoObra').innerHTML=serv?'💡 No serviço, a mão de obra é o coração do preço: <strong>valor da hora × horas por atendimento</strong>. Cobre execução, preparo e pós-atendimento.':'💡 Inclua seu próprio tempo de produção. O valor da hora × as horas informadas na seção 02 compõem a mão de obra direta.';
-  document.getElementById('beUnidadesLbl').textContent=serv?'atendimentos/mês':'unidades/mês';
+  document.getElementById('dicaMaoObra').innerHTML=serv?'💡 No serviço, a mão de obra é o coração do preço: <strong>valor da hora × horas por atendimento</strong>.':'💡 O valor da hora × as horas informadas na seção 02 compõem a mão de obra direta.';
+  // Custos variáveis: rótulo por modo
+  if(dig){
+    const assin=document.getElementById('digitalSubtipo').value==='assinatura';
+    document.getElementById('tituloVariaveis').textContent='07 — '+(assin?'Custo por Assinante / mês':'Custo por Venda');
+    document.getElementById('textoVariaveis').innerHTML=assin?'Custos que existem <strong>por assinante ativo</strong> — servidor, gateway de pagamento, suporte, e-mail. Valor <strong>por assinante/mês</strong>.':'Custos <strong>por venda/download</strong> — taxa do gateway/plataforma, hospedagem, entrega. Valor <strong>por venda</strong>.';
+  } else {
+    document.getElementById('tituloVariaveis').textContent='07 — Custos Variáveis por Unidade';
+    document.getElementById('textoVariaveis').innerHTML='Custos que <strong>variam a cada venda</strong> — embalagem, frete, comissão, taxa de maquininha/marketplace. Valor <strong>por unidade</strong>.';
+  }
   autoCalc();
 }
+function selecionarDigitalSub(sub){
+  document.getElementById('digitalSubtipo').value=sub;
+  document.getElementById('btnAssinatura').classList.toggle('active',sub==='assinatura');
+  document.getElementById('btnLicenca').classList.toggle('active',sub==='licenca');
+  document.querySelectorAll('.sub-assinatura').forEach(el=>el.style.display=sub==='assinatura'?'block':'none');
+  document.querySelectorAll('.sub-licenca').forEach(el=>el.style.display=sub==='licenca'?'block':'none');
+  selecionarTipo('digital');
+}
 
-/* ===== ITENS ===== */
+/* ITENS */
 function addItem(lista){const id=Date.now()+Math.random();listas[lista].push({id,nome:'',valor:''});renderLista(lista);setTimeout(()=>{const els=document.querySelectorAll('#'+listaIds[lista]+' .nome');if(els.length)els[els.length-1].focus();},50);}
 function removeItem(lista,id){listas[lista]=listas[lista].filter(i=>i.id!==id);renderLista(lista);if(lista==='fixos')atualizarTotalFixo();autoCalc();}
 function renderLista(lista){const c=document.getElementById(listaIds[lista]);if(!c)return;c.innerHTML='';listas[lista].forEach(item=>{const d=document.createElement('div');d.className='custo-item';d.innerHTML=`<input class="nome" type="text" placeholder="Descrição" value="${item.nome||''}" oninput="updateItem('${lista}',${item.id},'nome',this.value)"><div style="display:flex;align-items:center;gap:4px"><span class="prefix-r">R$</span><input class="valor" type="number" min="0" step="0.01" placeholder="0,00" value="${item.valor||''}" oninput="updateItem('${lista}',${item.id},'valor',this.value);autoCalc()"></div><button class="btn-del" onclick="removeItem('${lista}',${item.id})">×</button>`;c.appendChild(d);});}
 function updateItem(lista,id,campo,valor){const it=listas[lista].find(i=>i.id===id);if(it)it[campo]=campo==='valor'?parseFloat(valor)||0:valor;if(lista==='fixos')atualizarTotalFixo();}
 function atualizarTotalFixo(){const t=listas.fixos.reduce((s,i)=>s+(parseFloat(i.valor)||0),0);const el=document.getElementById('totalCustoFixoDisplay');if(el)el.textContent=fmt(t);autoCalc();}
 
-/* ===== HORA / SALÁRIO MÍNIMO ===== */
+/* HORA */
 function minHora(){const sm=parseFloat(document.getElementById('salarioMinimo').value)||0;return sm/220;}
 function updateMinHora(){document.getElementById('minHoraTxt').textContent=fmt(minHora());autoCalc();}
 function aplicarMultiploHora(m){document.getElementById('valorHora').value=(minHora()*m).toFixed(2);autoCalc();}
 
-/* ===== MARGEM / IMPOSTO ===== */
+/* MARGEM/IMPOSTO */
 function updateMargem(v){margemAtual=parseInt(v);document.getElementById('margemDisplay').textContent=v+'%';const pct=((v-5)/55)*100;document.getElementById('sliderMargem').style.setProperty('--pct',pct+'%');const z=document.getElementById('zonaLabel');if(v<20){z.className='margem-zona zona-baixo';z.textContent='⚠ Abaixo do recomendado';}else if(v<=40){z.className='margem-zona zona-ok';z.textContent='✓ Faixa Recomendada';}else{z.className='margem-zona zona-alto';z.textContent='↑ Margem Premium';}}
 function setMargem(v,btn){document.getElementById('sliderMargem').value=v;document.querySelectorAll('#secMargem .faixa-btn').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');updateMargem(v);autoCalc();}
 function updateImposto(){const val=document.getElementById('regime').value;document.getElementById('campoCustom').style.display=val==='custom'?'flex':'none';aliquotaAtual=val==='custom'?parseFloat(document.getElementById('aliquotaCustom').value)||0:parseFloat(val)||0;document.getElementById('aliquotaDisplay').value=aliquotaAtual.toFixed(2);autoCalc();}
 function autoCalc(){if(!jaCalculou)return;clearTimeout(autoTimer);autoTimer=setTimeout(calcular,450);}
 
-/* ===== CÁLCULO CENTRAL ===== */
+/* CÁLCULO */
 function calcular(){
-  const serv=document.getElementById('tipoOferta').value==='servico';
-  const nomeProd=document.getElementById('nomeProduto').value||(serv?'Serviço':'Produto');
-  const unidade=document.getElementById('unidade').value||(serv?'atendimento':'unidade');
+  const tipo=document.getElementById('tipoOferta').value;
+  const serv=tipo==='servico',dig=tipo==='digital';
+  const dsub=document.getElementById('digitalSubtipo').value;
+  const nomeProd=document.getElementById('nomeProduto').value||(dig?'Produto digital':serv?'Serviço':'Produto');
+  let unidade=document.getElementById('unidade').value;
+  if(!unidade)unidade=dig?(dsub==='assinatura'?'assinatura':'licença'):serv?'atendimento':'unidade';
   const somaL=l=>listas[l].reduce((s,i)=>s+(parseFloat(i.valor)||0),0);
   const varUn=somaL('variaveis');
   const valorHora=parseFloat(document.getElementById('valorHora').value)||0;
@@ -629,9 +680,26 @@ function calcular(){
   const lucroDesejado=parseFloat(document.getElementById('lucroDesejado').value)||0;
   const precoMercado=parseFloat(document.getElementById('precoMercado').value)||0;
 
-  let custoUn,matUn,mdoUn,matBruto,mdoTotal,qtd,vendasMensais,capacidadeMensal,horasFat=0,taxaOcup=0;
+  let custoUn,matUn=0,mdoUn=0,matBruto=0,mdoTotal=0,qtd=1,vendasMensais=1,capacidadeMensal=0,horasFat=0,taxaOcup=0;
+  let devUn=0,custoDev=0,assinantes=0,churn=0,cac=0,cicloAnual=false;
 
-  if(serv){
+  if(dig){
+    if(dsub==='assinatura'){
+      assinantes=parseInt(document.getElementById('assinantes').value)||1;
+      churn=parseFloat(document.getElementById('churn').value)||0;
+      cac=parseFloat(document.getElementById('cac').value)||0;
+      cicloAnual=document.getElementById('cicloDigital').value==='anual';
+      vendasMensais=assinantes;capacidadeMensal=0;qtd=assinantes;
+      custoUn=varUn; // custo variável por assinante/mês
+    } else {
+      custoDev=parseFloat(document.getElementById('custoDev').value)||0;
+      const vmd=parseInt(document.getElementById('vendasMensaisDig').value)||1;
+      const horiz=parseInt(document.getElementById('horizonteAmort').value)||12;
+      vendasMensais=vmd;qtd=vmd;capacidadeMensal=0;
+      devUn=custoDev/Math.max(1,vmd*horiz);
+      custoUn=varUn+devUn;
+    }
+  } else if(serv){
     const horasDisp=parseFloat(document.getElementById('horasDisponiveis').value)||160;
     taxaOcup=parseFloat(document.getElementById('taxaOcupacao').value)||50;
     const horasAtend=parseFloat(document.getElementById('horasAtendimento').value)||1;
@@ -640,8 +708,7 @@ function calcular(){
     vendasMensais=parseInt(document.getElementById('vendasMensaisServ').value)||capacidadeMensal;
     document.getElementById('rbHorasFat').textContent=horasFat.toFixed(0)+' h';
     document.getElementById('rbCapAtend').textContent=capacidadeMensal+' atend.';
-    matUn=somaL('materiais'); // insumos por atendimento
-    mdoUn=valorHora*horasAtend;
+    matUn=somaL('materiais');mdoUn=valorHora*horasAtend;
     matBruto=matUn*vendasMensais;mdoTotal=mdoUn*vendasMensais;qtd=vendasMensais;
     custoUn=matUn+mdoUn+varUn;
   } else {
@@ -653,7 +720,7 @@ function calcular(){
     matUn=matBruto/qtd;mdoUn=mdoTotal/qtd;custoUn=matUn+mdoUn+varUn;
   }
 
-  if(custoUn<=0){if(jaCalculou)return;alert('Informe ao menos um custo (insumo, mão de obra ou variável).');return;}
+  if(custoUn<0||(custoUn<=0&&custoFixoMensal<=0&&devUn<=0)){if(jaCalculou)return;alert('Informe ao menos um custo (variável, fixo ou desenvolvimento).');return;}
   const fMarg=margemAtual/100,fImp=aliquotaAtual/100;
   const rateioFixo=custoFixoMensal/vendasMensais;
   const divisor=lucroDesejado>0?1-fImp:1-fMarg-fImp;
@@ -666,75 +733,76 @@ function calcular(){
   const margemLiquidaReal=preco*vendasMensais>0?lucroMensal/(preco*vendasMensais)*100:0;
   const markup=custoUn>0?preco/custoUn:0;
   jaCalculou=true;
-  dadosCalc={serv,custoUn,preco,impostoUn,mcUn,mcPct,lucroMensal,margemLiquidaReal,markup,qtd,vendasMensais,capacidadeMensal,lucroDesejado,nomeProd,unidade,matUn,mdoUn,varUn,matBruto,mdoTotal,custoFixoMensal,rateioFixo,precoMercado,horasFat,taxaOcup};
+  dadosCalc={tipo,serv,dig,dsub,custoUn,preco,impostoUn,mcUn,mcPct,lucroMensal,margemLiquidaReal,markup,qtd,vendasMensais,capacidadeMensal,lucroDesejado,nomeProd,unidade,matUn,mdoUn,varUn,matBruto,mdoTotal,custoFixoMensal,rateioFixo,precoMercado,horasFat,taxaOcup,devUn,custoDev,assinantes,churn,cac,cicloAnual};
 
+  const unLabel=dig?(dsub==='assinatura'?'assinante':'venda'):serv?'atend.':unidade;
   document.getElementById('resCusto').textContent=fmt(custoUn);
+  document.getElementById('resCustoSub').textContent=dig&&dsub==='licenca'?'inclui dev diluído':'sem impostos';
   document.getElementById('resPreco').textContent=fmt(preco);
   document.getElementById('resProdutoSub').textContent=`${nomeProd} · ${unidade}`;
   document.getElementById('resImposto').textContent=fmt(impostoUn);
   document.getElementById('resImpostoSub').textContent=`${aliquotaAtual.toFixed(1)}% sobre a venda`;
   document.getElementById('resLucro').textContent=fmt(mcUn);
   document.getElementById('resLucroSub').textContent=`${mcPct.toFixed(1)}% de contribuição`;
-  document.getElementById('resMcPct').textContent=mcPct.toFixed(1)+'%';
+  document.getElementById('resRateio').textContent=fmt(rateioFixo);
+  document.getElementById('resRateioSub').textContent=custoFixoMensal>0?`fixo ÷ ${vendasMensais}`:'sem custo fixo';
   const eLM=document.getElementById('resLucroMensal');eLM.textContent=fmt(lucroMensal);eLM.style.color=lucroMensal>=0?'var(--green)':'var(--red)';
-  document.getElementById('resLucroMensalSub').textContent=`com ${vendasMensais} ${serv?'atend.':'venda(s)'}/mês`;
+  document.getElementById('resLucroMensalSub').textContent=`com ${vendasMensais} ${unLabel}${vendasMensais>1&&!dig?'s':''}/mês`;
   document.getElementById('resMargemLiquida').textContent=margemLiquidaReal.toFixed(1)+'%';
-  document.getElementById('resMarkup').textContent=markup.toFixed(2)+'×';
-  document.getElementById('resLoteInfo').innerHTML=`<strong>${serv?'🛠':'📦'} Projeção mensal:</strong> ${vendasMensais} ${serv?'atendimentos':unidade+'(s)'} · receita ${fmt(preco*vendasMensais)} · contribuição ${fmt(mcUn*vendasMensais)} · <strong>lucro líquido ${fmt(lucroMensal)}</strong>.`;
+  document.getElementById('resMarkup').textContent=markup>0?markup.toFixed(2)+'×':'—';
+  document.getElementById('resLoteInfo').innerHTML=`<strong>${dig?'💻':serv?'🛠':'📦'} Projeção mensal:</strong> ${vendasMensais} ${dig?(dsub==='assinatura'?'assinantes':'vendas'):serv?'atendimentos':unidade+'(s)'} · receita ${fmt(preco*vendasMensais)} · contribuição ${fmt(mcUn*vendasMensais)} · <strong>lucro líquido ${fmt(lucroMensal)}</strong>.`;
+  document.getElementById('resRateioInfo').innerHTML=`<strong>🧮 Rateio do custo fixo:</strong> ${fmt(custoFixoMensal)} ÷ ${vendasMensais} ${dig?(dsub==='assinatura'?'assinantes':'vendas'):'vendas'} = <strong>${fmt(rateioFixo)} por ${unLabel}</strong>, já embutido no preço. Se o volume real for menor, esse valor sobe e o preço precisa subir para manter o lucro.`;
   const precoEq=(custoUn+rateioFixo)/(1-fImp);
   const descEq=preco>0?Math.max(0,(preco-precoEq)/preco*100):0;
-  document.getElementById('resDescontoInfo').innerHTML=`<strong>🏷 Desconto máximo mantendo o equilíbrio:</strong> <strong>${descEq.toFixed(1)}%</strong>. Abaixo desse preço, as ${vendasMensais} vendas não cobrem todos os custos.`;
+  document.getElementById('resDescontoInfo').innerHTML=`<strong>🏷 Desconto máximo mantendo o equilíbrio:</strong> <strong>${descEq.toFixed(1)}%</strong>.`;
 
-  // Valor de mercado
   const mInfo=document.getElementById('resMercadoInfo');
-  if(precoMercado>0){
-    mInfo.style.display='block';
-    if(precoMercado>=preco){const extra=(precoMercado-preco)*vendasMensais;mInfo.className='hl-box hl-green';mInfo.innerHTML=`<strong>📈 Oportunidade:</strong> o mercado cobra ${fmt(precoMercado)} — acima do seu preço mínimo (${fmt(preco)}). Você pode capturar até <strong>${fmt(precoMercado-preco)}/venda</strong> de lucro extra (<strong>${fmt(extra)}/mês</strong>) com bom posicionamento e valor percebido.`;}
-    else{const gap=(preco-precoMercado)/preco*100;mInfo.className='hl-box hl-amber';mInfo.innerHTML=`<strong>⚠ Atenção competitiva:</strong> o mercado (${fmt(precoMercado)}) está <strong>${gap.toFixed(1)}% abaixo</strong> do seu preço mínimo (${fmt(preco)}). Reveja custos, reduza a margem ou reforce diferenciais que justifiquem cobrar mais.`;}
-  } else mInfo.style.display='none';
+  if(precoMercado>0){mInfo.style.display='block';if(precoMercado>=preco){const extra=(precoMercado-preco)*vendasMensais;mInfo.className='hl-box hl-green';mInfo.innerHTML=`<strong>📈 Oportunidade:</strong> o mercado cobra ${fmt(precoMercado)} — acima do seu preço mínimo (${fmt(preco)}). Você pode capturar até <strong>${fmt(precoMercado-preco)}/venda</strong> (<strong>${fmt(extra)}/mês</strong>) de lucro extra.`;}else{const gap=(preco-precoMercado)/preco*100;mInfo.className='hl-box hl-amber';mInfo.innerHTML=`<strong>⚠ Atenção competitiva:</strong> o mercado (${fmt(precoMercado)}) está <strong>${gap.toFixed(1)}% abaixo</strong> do seu preço mínimo (${fmt(preco)}). Reveja custos, margem ou reforce diferenciais.`;}}else mInfo.style.display='none';
 
-  renderAlertas(matUn,custoUn,mcPct,lucroMensal,vendasMensais,capacidadeMensal,serv,valorHora);
-  renderBarra(matUn,mdoUn,varUn,impostoUn,mcUn,preco);
-  renderRosca(matUn,mdoUn,varUn,impostoUn,mcUn,preco);
+  renderAlertas(matUn,custoUn,mcPct,lucroMensal,vendasMensais,capacidadeMensal,serv,dig,valorHora);
+  renderBarra(matUn,mdoUn,varUn,devUn,rateioFixo,impostoUn,mcUn,preco);
+  renderRosca(matUn,mdoUn,varUn,devUn,rateioFixo,impostoUn,mcUn,preco);
+  renderDigital();
   renderMeta();
-  renderDesconto(preco,custoUn,vendasMensais,custoFixoMensal,serv,unidade);
+  renderDesconto(preco,custoUn,vendasMensais,custoFixoMensal,dig,dsub,serv,unLabel);
   renderComparador();
-  renderBreakEven(preco,custoUn,impostoUn,custoFixoMensal,capacidadeMensal,vendasMensais,serv);
-  renderCenarios(matBruto,mdoTotal,varUn,qtd,custoFixoMensal,vendasMensais,serv,matUn,mdoUn);
+  renderBreakEven(preco,custoUn,impostoUn,custoFixoMensal,capacidadeMensal,vendasMensais,dig,dsub,serv);
+  renderCenarios(matBruto,mdoTotal,varUn,qtd,custoFixoMensal,vendasMensais,serv,dig,matUn,mdoUn,devUn);
   renderTabela(custoUn,rateioFixo);
   renderFicha();
 
-  document.getElementById('dica').innerHTML=`<strong>💡 Análise:</strong> custo unitário <strong>${fmt(custoUn)}</strong>, imposto <strong>${fmt(impostoUn)}</strong>, preço ideal <strong>${fmt(preco)}</strong>.${margemAtual<20?'<br><br><strong>⚠</strong> Margem abaixo de 20% — risco de não cobrir imprevistos.':''}${margemAtual>=40?'<br><br><strong>✨ Margem Premium</strong> — confirme que o valor percebido justifica o preço.':''}`;
+  document.getElementById('dica').innerHTML=`<strong>💡 Análise:</strong> custo unitário <strong>${fmt(custoUn)}</strong>, imposto <strong>${fmt(impostoUn)}</strong>, preço ideal <strong>${fmt(preco)}</strong>.${margemAtual<20?'<br><br><strong>⚠</strong> Margem abaixo de 20%.':''}${margemAtual>=40?'<br><br><strong>✨ Margem Premium</strong> — confirme que o valor percebido justifica o preço.':''}`;
 
-  ['resultado','metaBloco','descontoBloco','comparadorBloco','breakEvenBloco','cenariosBloco','tabelaBloco'].forEach(id=>document.getElementById(id).style.display='block');
+  ['resultado','digitalBloco','metaBloco','descontoBloco','comparadorBloco','breakEvenBloco','cenariosBloco','tabelaBloco'].forEach(id=>document.getElementById(id).style.display='block');
+  document.getElementById('digitalBloco').style.display=dig?'block':'none';
   if(!window._scrolled&&!document.body.classList.contains('wizard-on')){document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'});window._scrolled=true;}
 }
 
-/* ===== ALERTAS ===== */
-function renderAlertas(mat,custo,mcPct,lucroMensal,vendasMensais,capacidadeMensal,serv,valorHora){
+/* ALERTAS */
+function renderAlertas(mat,custo,mcPct,lucroMensal,vendasMensais,capacidadeMensal,serv,dig,valorHora){
   const al=[];const pct=custo>0?mat/custo*100:0;
-  if(serv&&valorHora>0&&valorHora<minHora())al.push({t:'danger',i:'🚨',m:`Sua hora (${fmt(valorHora)}) está <strong>abaixo do piso do salário mínimo</strong> (${fmt(minHora())}/h). Você está trabalhando por menos que um piso trabalhista.`});
-  else if(serv&&valorHora>0&&valorHora<minHora()*1.5)al.push({t:'warn',i:'⏱',m:`Sua hora (${fmt(valorHora)}) está pouco acima do piso mínimo. Para trabalho qualificado, considere 2× a 3× o mínimo/hora.`});
-  if(!serv&&pct>60)al.push({t:'warn',i:'⚠️',m:`Matéria-prima é <strong>${pct.toFixed(0)}%</strong> do custo — alta dependência de insumos.`});
+  if(serv&&valorHora>0&&valorHora<minHora())al.push({t:'danger',i:'🚨',m:`Sua hora (${fmt(valorHora)}) está <strong>abaixo do piso do salário mínimo</strong> (${fmt(minHora())}/h).`});
+  else if(serv&&valorHora>0&&valorHora<minHora()*1.5)al.push({t:'warn',i:'⏱',m:`Sua hora (${fmt(valorHora)}) está pouco acima do piso. Para trabalho qualificado, considere 2× a 3× o mínimo/hora.`});
+  if(!serv&&!dig&&pct>60)al.push({t:'warn',i:'⚠️',m:`Matéria-prima é <strong>${pct.toFixed(0)}%</strong> do custo.`});
   if(margemAtual<20)al.push({t:'danger',i:'🚨',m:`Margem de <strong>${margemAtual}%</strong> abaixo do mínimo recomendado (20%).`});
   if(aliquotaAtual===0)al.push({t:'warn',i:'📋',m:`Nenhum imposto informado. Se vende formalmente, inclua a tributação.`});
   if(mcPct<=0)al.push({t:'danger',i:'🚨',m:'Margem de contribuição negativa: cada venda aumenta o prejuízo.'});
   else if(mcPct<20)al.push({t:'warn',i:'⚠️',m:`Contribuição de <strong>${mcPct.toFixed(1)}%</strong> oferece pouca proteção.`});
-  if(lucroMensal<0)al.push({t:'danger',i:'📉',m:`Com ${vendasMensais} ${serv?'atendimentos':'vendas'}/mês, o resultado projetado é <strong>${fmt(lucroMensal)}</strong>.`});
+  if(lucroMensal<0)al.push({t:'danger',i:'📉',m:`Com ${vendasMensais} ${dig?'assinantes/vendas':serv?'atendimentos':'vendas'}/mês, o resultado projetado é <strong>${fmt(lucroMensal)}</strong>.`});
   if(capacidadeMensal>0&&vendasMensais>capacidadeMensal)al.push({t:'danger',i:'⛔',m:`A previsão de ${vendasMensais} supera a capacidade de <strong>${capacidadeMensal}</strong>.`});
   if(al.length===0)al.push({t:'ok',i:'✅',m:`Simulação saudável! Margem de <strong>${margemAtual}%</strong> na faixa recomendada.`});
   const cls={warn:'alerta-warn',danger:'alerta-danger',ok:'alerta-ok',info:'alerta-info'};
   document.getElementById('alertas').innerHTML=al.map(a=>`<div class="alerta ${cls[a.t]}"><span class="alerta-icon">${a.i}</span><span>${a.m}</span></div>`).join('');
 }
 
-/* ===== VISUAIS ===== */
-function renderBarra(mat,mdo,varr,imp,luc,total){
-  const segs=[{l:'Insumos',v:mat,c:'seg-mat',cor:'#2E75B6'},{l:'Mão de obra',v:mdo,c:'seg-mdo',cor:'#6a5acd'},{l:'Outros variáveis',v:varr,c:'seg-var',cor:'#e07b20'},{l:'Imposto',v:imp,c:'seg-imp',cor:'#d94040'},{l:'Contribuição',v:luc,c:'seg-luc',cor:'#1A6B3C'}].filter(s=>s.v>0);
-  document.getElementById('barraCustos').innerHTML=segs.map(s=>{const p=(s.v/total*100).toFixed(1);return`<div class="barra-seg ${s.c}" style="width:${p}%">${p>8?p+'%':''}</div>`;}).join('');
+/* VISUAIS */
+function renderBarra(mat,mdo,varr,dev,fix,imp,luc,total){
+  const segs=[{l:'Insumos',v:mat,c:'seg-mat',cor:'#2E75B6'},{l:'Mão de obra',v:mdo,c:'seg-mdo',cor:'#6a5acd'},{l:'Desenvolvimento',v:dev,c:'seg-dev',cor:'#9333ea'},{l:'Outros variáveis',v:varr,c:'seg-var',cor:'#e07b20'},{l:'Custo fixo (rateio)',v:fix,c:'seg-fix',cor:'#0f766e'},{l:'Imposto',v:imp,c:'seg-imp',cor:'#d94040'},{l:'Contribuição',v:luc-fix,c:'seg-luc',cor:'#1A6B3C'}].filter(s=>s.v>0);
+  document.getElementById('barraCustos').innerHTML=segs.map(s=>{const p=(s.v/total*100).toFixed(1);return`<div class="barra-seg ${s.c}" style="width:${p}%">${p>7?p+'%':''}</div>`;}).join('');
   document.getElementById('legenda').innerHTML=segs.map(s=>`<div class="leg-item"><div class="leg-dot" style="background:${s.cor}"></div>${s.l}: ${fmt(s.v)}</div>`).join('');
 }
-function renderRosca(mat,mdo,varr,imp,luc,total){
-  const segs=[{l:'Insumos',v:mat,cor:'#2E75B6'},{l:'Mão de obra',v:mdo,cor:'#6a5acd'},{l:'Outros variáveis',v:varr,cor:'#e07b20'},{l:'Imposto',v:imp,cor:'#d94040'},{l:'Contribuição',v:luc,cor:'#1A6B3C'}].filter(s=>s.v>0);
+function renderRosca(mat,mdo,varr,dev,fix,imp,luc,total){
+  const segs=[{l:'Insumos',v:mat,cor:'#2E75B6'},{l:'Mão de obra',v:mdo,cor:'#6a5acd'},{l:'Desenvolvimento',v:dev,cor:'#9333ea'},{l:'Outros variáveis',v:varr,cor:'#e07b20'},{l:'Custo fixo (rateio)',v:fix,cor:'#0f766e'},{l:'Imposto',v:imp,cor:'#d94040'},{l:'Contribuição',v:luc-fix,cor:'#1A6B3C'}].filter(s=>s.v>0);
   const cv=document.getElementById('rosca'),ctx=cv.getContext('2d'),cx=90,cy=90,r=78,ri=48;ctx.clearRect(0,0,180,180);let a=-Math.PI/2;
   segs.forEach(s=>{const sl=(s.v/total)*Math.PI*2;ctx.beginPath();ctx.moveTo(cx,cy);ctx.arc(cx,cy,r,a,a+sl);ctx.closePath();ctx.fillStyle=s.cor;ctx.fill();a+=sl;});
   ctx.beginPath();ctx.arc(cx,cy,ri,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
@@ -742,49 +810,85 @@ function renderRosca(mat,mdo,varr,imp,luc,total){
   document.getElementById('roscaLegend').innerHTML=segs.map(s=>{const p=(s.v/total*100).toFixed(1);return`<div class="rosca-leg-item"><div class="rosca-leg-dot" style="background:${s.cor}"></div><span class="rosca-leg-label">${s.l}</span><span class="rosca-leg-val">${fmt(s.v)}</span><span class="rosca-leg-pct">${p}%</span></div>`;}).join('');
 }
 
-/* ===== META DE RENDA ===== */
+/* DIGITAL */
+function renderDigital(){
+  if(!dadosCalc||!dadosCalc.dig){document.getElementById('digitalBloco').style.display='none';return;}
+  const d=dadosCalc,cards=document.getElementById('digitalCards'),dica=document.getElementById('dicaDigital');
+  if(d.dsub==='assinatura'){
+    document.getElementById('digitalTitulo').textContent='11 — Métricas de Assinatura (SaaS)';
+    const mrr=d.preco*d.assinantes;
+    const be=d.mcUn>0?Math.ceil(d.custoFixoMensal/d.mcUn):null;
+    const permanencia=d.churn>0?(1/(d.churn/100)):null;
+    const ltv=permanencia?d.mcUn*permanencia:null;
+    const ratio=(ltv&&d.cac>0)?ltv/d.cac:null;
+    const precoAnual=d.preco*12;
+    let html=`
+      <div class="be-card"><div class="be-num">${fmt(mrr)}</div><div class="be-label">MRR projetado</div><div class="be-sub">receita recorrente/mês</div></div>
+      <div class="be-card"><div class="be-num">${be!==null?be:'—'}</div><div class="be-label">assinantes p/ equilíbrio</div><div class="be-sub">cobrir custos fixos</div></div>`;
+    html+=ltv!==null?`<div class="be-card"><div class="be-num">${fmt(ltv)}</div><div class="be-label">LTV por assinante</div><div class="be-sub">${permanencia.toFixed(1)} meses de permanência</div></div>`:`<div class="be-card"><div class="be-num">—</div><div class="be-label">LTV por assinante</div><div class="be-sub">informe o churn</div></div>`;
+    html+=ratio!==null?`<div class="be-card"><div class="be-num" style="color:${ratio>=3?'var(--green)':ratio>=1?'var(--orange)':'var(--red)'}">${ratio.toFixed(1)}×</div><div class="be-label">LTV : CAC</div><div class="be-sub">${ratio>=3?'saudável (≥3)':ratio>=1?'atenção (<3)':'crítico (<1)'}</div></div>`:`<div class="be-card"><div class="be-num">—</div><div class="be-label">LTV : CAC</div><div class="be-sub">informe churn e CAC</div></div>`;
+    cards.innerHTML=html;
+    let extra='';
+    if(d.cicloAnual)extra=` No plano anual, o preço cheio seria <strong>${fmt(precoAnual)}/ano</strong> — é comum oferecer desconto (ex.: 2 meses grátis → ${fmt(d.preco*10)}) para reduzir churn e antecipar caixa.`;
+    dica.innerHTML=`<strong>🔁 Assinatura:</strong> cada assinante contribui com <strong>${fmt(d.mcUn)}/mês</strong>.${ratio!==null?` A relação LTV:CAC de <strong>${ratio.toFixed(1)}×</strong> ${ratio>=3?'indica aquisição saudável.':'sugere rever custo de aquisição ou aumentar a retenção.'}`:''}${permanencia?` Com churn de ${d.churn}%, o assinante fica em média ${permanencia.toFixed(1)} meses.`:' Informe o churn para calcular LTV.'}${extra}`;
+  } else {
+    document.getElementById('digitalTitulo').textContent='11 — Métricas de Licença / Venda Única';
+    const contribBruta=d.preco-d.varUn-d.impostoUn; // antes de dev e fixo
+    const vendasRecupera=contribBruta>0&&d.custoDev>0?Math.ceil(d.custoDev/contribBruta):null;
+    const mesesRecupera=vendasRecupera&&d.vendasMensais>0?Math.ceil(vendasRecupera/d.vendasMensais):null;
+    cards.innerHTML=`
+      <div class="be-card"><div class="be-num">${fmt(d.devUn)}</div><div class="be-label">dev diluído/venda</div><div class="be-sub">${fmt(d.custoDev)} amortizados</div></div>
+      <div class="be-card"><div class="be-num">${vendasRecupera!==null?vendasRecupera:'—'}</div><div class="be-label">vendas p/ pagar o dev</div><div class="be-sub">recuperar o investimento</div></div>
+      <div class="be-card"><div class="be-num">${mesesRecupera!==null?mesesRecupera:'—'}</div><div class="be-label">meses p/ pagar o dev</div><div class="be-sub">no volume previsto</div></div>`;
+    dica.innerHTML=`<strong>🎫 Venda única:</strong> o desenvolvimento (${fmt(d.custoDev)}) está diluído em <strong>${fmt(d.devUn)}/venda</strong>. ${vendasRecupera!==null?`Você recupera o investimento em <strong>${vendasRecupera} vendas</strong>${mesesRecupera?` (~${mesesRecupera} meses)`:''}. Depois disso, o custo marginal de cada cópia é quase zero — a margem sobe muito.`:'Informe o custo de desenvolvimento e o preço para ver o payback.'}`;
+  }
+}
+
+/* META */
 function renderMeta(){
   if(!dadosCalc)return;
   const meta=parseFloat(document.getElementById('metaRenda').value)||0;
-  const {preco,mcUn,custoFixoMensal,vendasMensais,serv,unidade}=dadosCalc;
+  const {preco,mcUn,custoFixoMensal,vendasMensais,dig,dsub,serv,unidade}=dadosCalc;
   const cards=document.getElementById('metaCards'),dica=document.getElementById('dicaMeta');
+  const unL=dig?(dsub==='assinatura'?'assinantes':'vendas'):serv?'atendimentos':unidade+'s';
   if(meta<=0||mcUn<=0){cards.innerHTML='<p style="color:var(--muted);font-size:13px;grid-column:1/-1">Informe sua meta de renda mensal acima.</p>';dica.style.display='none';return;}
   const vendasNec=Math.ceil((custoFixoMensal+meta)/mcUn);
   const precoNec=(dadosCalc.custoUn+(custoFixoMensal+meta)/vendasMensais)/(1-aliquotaAtual/100);
-  const fatNec=vendasNec*preco;
   cards.innerHTML=`
-    <div class="be-card"><div class="be-num">${vendasNec}</div><div class="be-label">${serv?'atendimentos':unidade+'s'}/mês</div><div class="be-sub">mantendo o preço ${fmt(preco)}</div></div>
-    <div class="be-card"><div class="be-num">${fmt(precoNec)}</div><div class="be-label">preço necessário</div><div class="be-sub">mantendo ${vendasMensais} ${serv?'atend.':'vendas'}/mês</div></div>
-    <div class="be-card"><div class="be-num">${fmt(fatNec)}</div><div class="be-label">faturamento/mês</div><div class="be-sub">no volume necessário</div></div>`;
+    <div class="be-card"><div class="be-num">${vendasNec}</div><div class="be-label">${unL}/mês</div><div class="be-sub">mantendo ${fmt(preco)}</div></div>
+    <div class="be-card"><div class="be-num">${fmt(precoNec)}</div><div class="be-label">preço necessário</div><div class="be-sub">mantendo ${vendasMensais} ${unL}</div></div>
+    <div class="be-card"><div class="be-num">${fmt(vendasNec*preco)}</div><div class="be-label">faturamento/mês</div><div class="be-sub">no volume necessário</div></div>`;
   const viavel=dadosCalc.capacidadeMensal>0?vendasNec<=dadosCalc.capacidadeMensal:true;
   dica.style.display='block';
-  dica.innerHTML=`<strong>🎯 Para ganhar ${fmt(meta)}/mês:</strong> faça <strong>${vendasNec} ${serv?'atendimentos':'vendas'}</strong> ao preço atual, OU cobre <strong>${fmt(precoNec)}</strong> mantendo o volume de ${vendasMensais}. ${!viavel?`<br><strong style="color:var(--red)">⚠ Atenção:</strong> ${vendasNec} supera sua capacidade de ${dadosCalc.capacidadeMensal}. Priorize aumentar o preço.`:''}`;
+  dica.innerHTML=`<strong>🎯 Para ganhar ${fmt(meta)}/mês:</strong> faça <strong>${vendasNec} ${unL}</strong> ao preço atual, OU cobre <strong>${fmt(precoNec)}</strong> mantendo ${vendasMensais}. ${!viavel?`<br><strong style="color:var(--red)">⚠</strong> ${vendasNec} supera sua capacidade de ${dadosCalc.capacidadeMensal}. Priorize aumentar o preço.`:''}`;
 }
 
-/* ===== DESCONTO ===== */
-function renderDesconto(preco,custo,vendasMensais,custoFixoMensal,serv,unidade){
+/* DESCONTO */
+function renderDesconto(preco,custo,vendasMensais,custoFixoMensal,dig,dsub,serv,unL){
   const descs=[0,5,10,15,20,25,30];let html=`<thead><tr><th>Desconto</th><th>Preço final</th><th>MC/un.</th><th>Lucro mensal</th><th>Situação</th></tr></thead><tbody>`;
   descs.forEach(d=>{const pd=preco*(1-d/100),imp=pd*(aliquotaAtual/100),mc=pd-custo-imp,lm=mc*vendasMensais-custoFixoMensal,zero=lm<0;const cor=zero?'var(--red)':d===0?'var(--green)':'var(--orange)';const sit=zero?'❌ Prejuízo':d===0?'✅ Cheio':lm===0?'⚠ Equilíbrio':'🟡 Lucrativo';html+=`<tr${zero?' class="zero"':''}><td><strong>${d}%</strong></td><td class="num" style="color:var(--verde)">${fmt(pd)}</td><td class="num" style="color:${cor}">${fmt(mc)}</td><td class="num" style="color:${cor}">${fmt(lm)}</td><td style="font-size:12px">${sit}</td></tr>`;});
   document.getElementById('tabelaDesconto').innerHTML=html+'</tbody>';
   const pEq=(custo+custoFixoMensal/vendasMensais)/(1-aliquotaAtual/100),maxD=Math.max(0,(1-pEq/preco)*100);
-  document.getElementById('dicaDesconto').innerHTML=`<strong>💡 Regra de ouro:</strong> com ${vendasMensais} ${serv?'atendimentos':'vendas'}/mês, o desconto máximo que ainda cobre todos os custos é <strong>${maxD.toFixed(1)}%</strong>. O imposto é recalculado sobre cada preço com desconto.`;
+  document.getElementById('dicaDesconto').innerHTML=`<strong>💡 Regra de ouro:</strong> com ${vendasMensais} ${dig?(dsub==='assinatura'?'assinantes':'vendas'):serv?'atendimentos':'vendas'}/mês, o desconto máximo que ainda cobre todos os custos é <strong>${maxD.toFixed(1)}%</strong>.`;
 }
 
-/* ===== COMPARADOR ===== */
+/* COMPARADOR */
 function renderComparador(){
   if(!dadosCalc)return;
   const nomeA=dadosCalc.nomeProd,precoA=dadosCalc.preco,custoA=dadosCalc.custoUn,mcA=dadosCalc.mcUn,qtdA=dadosCalc.vendasMensais,margA=(mcA/precoA*100).toFixed(1);
   const nomeB=document.getElementById('compNome').value||'Item B';
   const precoB=parseFloat(document.getElementById('compPreco').value)||0,custoB=parseFloat(document.getElementById('compCusto').value)||0,qtdB=parseInt(document.getElementById('compQtd').value)||1;
-  if(precoB<=0||custoB<=0){document.getElementById('comparadorCards').innerHTML='<p style="color:var(--muted);font-size:13px;grid-column:1/-1">Preencha preço e custo do item B para comparar.</p>';document.getElementById('dicaComparador').style.display='none';return;}
+  if(precoB<=0||custoB<=0){document.getElementById('comparadorCards').innerHTML='<p style="color:var(--muted);font-size:13px;grid-column:1/-1">Preencha preço e custo do item B.</p>';document.getElementById('dicaComparador').style.display='none';return;}
   const impB=precoB*aliquotaAtual/100,mcB=precoB-custoB-impB,margB=(mcB/precoB*100).toFixed(1),lA=mcA*qtdA,lB=mcB*qtdB,winA=lA>=lB;
   const card=(n,p,c,i,mc,mg,q,l,w)=>`<div class="comp-card ${w?'comp-winner':''}"><div class="comp-title">${n}${w?'<span class="comp-winner-badge">MELHOR</span>':''}</div><div class="comp-row"><span class="lbl">Preço</span><span class="val" style="color:var(--verde)">${fmt(p)}</span></div><div class="comp-row"><span class="lbl">Custo</span><span class="val">${fmt(c)}</span></div><div class="comp-row"><span class="lbl">Imposto</span><span class="val" style="color:var(--red)">${fmt(i)}</span></div><div class="comp-row"><span class="lbl">MC/un.</span><span class="val" style="color:var(--green)">${fmt(mc)}</span></div><div class="comp-row"><span class="lbl">Margem</span><span class="val">${mg}%</span></div><div class="comp-row"><span class="lbl">Volume/mês</span><span class="val">${q}</span></div><div class="comp-row" style="border-top:1px solid var(--border);margin-top:8px"><span class="lbl">💰 Lucro/mês</span><span class="val" style="color:var(--green);font-size:18px;font-family:'Bebas Neue'">${fmt(l)}</span></div></div>`;
   document.getElementById('comparadorCards').innerHTML=card(nomeA,precoA,custoA,dadosCalc.impostoUn,mcA,margA,qtdA,lA,winA)+card(nomeB,precoB,custoB,impB,mcB,margB,qtdB,lB,!winA);
   const dc=document.getElementById('dicaComparador');dc.innerHTML=`<strong>⚖️ Veredito:</strong> <strong>${winA?nomeA:nomeB}</strong> gera ${fmt(Math.abs(lA-lB))} a mais de lucro por mês.`;dc.style.display='block';
 }
 
-/* ===== BREAK-EVEN ===== */
-function renderBreakEven(preco,custo,imposto,custoFixoMensal,capacidadeMensal,vendasMensais,serv){
+/* BREAK-EVEN */
+function renderBreakEven(preco,custo,imposto,custoFixoMensal,capacidadeMensal,vendasMensais,dig,dsub,serv){
+  const lbl=dig?(dsub==='assinatura'?'assinantes':'vendas/mês'):serv?'atendimentos/mês':'unidades/mês';
+  document.getElementById('beUnidadesLbl').textContent=lbl;
   if(custoFixoMensal<=0){['beUnidades','beFaturamento','beDias'].forEach(id=>document.getElementById(id).textContent='—');document.getElementById('dicaBreakEven').innerHTML='<strong>💡 Dica:</strong> informe os <strong>custos fixos mensais</strong> (seção 03) para calcular o ponto de equilíbrio.';return;}
   const mc=preco-custo-imposto;if(mc<=0){document.getElementById('dicaBreakEven').innerHTML='<strong>⚠ Contribuição negativa.</strong> Revise custos e preço.';return;}
   const beUn=Math.ceil(custoFixoMensal/mc),beFat=beUn*preco,vDia=Math.max(vendasMensais/30,1/30),beDias=Math.ceil(beUn/vDia);
@@ -792,16 +896,17 @@ function renderBreakEven(preco,custo,imposto,custoFixoMensal,capacidadeMensal,ve
   document.getElementById('beFaturamento').textContent=fmt(beFat);
   document.getElementById('beDias').textContent=beDias;
   const cap=capacidadeMensal>0&&beUn>capacidadeMensal?` <strong style="color:var(--red)">Atenção:</strong> supera a capacidade de ${capacidadeMensal}.`:'';
-  document.getElementById('dicaBreakEven').innerHTML=`<strong>💡 Break-even:</strong> faça ao menos <strong>${beUn} ${serv?'atendimentos':'vendas'}/mês</strong> (faturando ${fmt(beFat)}) para cobrir ${fmt(custoFixoMensal)} de custos fixos. Cada venda gera <strong>${fmt(mc)}</strong> de contribuição.${cap}`;
+  document.getElementById('dicaBreakEven').innerHTML=`<strong>💡 Break-even:</strong> ao menos <strong>${beUn} ${dig?(dsub==='assinatura'?'assinantes':'vendas'):serv?'atendimentos':'vendas'}/mês</strong> (faturando ${fmt(beFat)}) para cobrir ${fmt(custoFixoMensal)} de fixos. Cada venda gera <strong>${fmt(mc)}</strong> de contribuição.${cap}`;
 }
 
-/* ===== CENÁRIOS ===== */
-function renderCenarios(matBruto,mdoTotal,varUn,qtdBase,custoFixoMensal,vendasMensais,serv,matUn,mdoUn){
+/* CENÁRIOS */
+function renderCenarios(matBruto,mdoTotal,varUn,qtdBase,custoFixoMensal,vendasMensais,serv,dig,matUn,mdoUn,devUn){
   const cens=[{cls:'cenario-pess',b:'📉 Pessimista',qf:.8,mf:1.1,d:'−20% volume, +10% insumos'},{cls:'cenario-real',b:'📊 Realista',qf:1,mf:1,d:'Cenário atual'},{cls:'cenario-otim',b:'📈 Otimista',qf:1.2,mf:.9,d:'+20% volume, −10% insumos'}];
   document.getElementById('cenariosGrid').innerHTML=cens.map(c=>{
     const vendas=Math.max(1,Math.round(vendasMensais*c.qf));
     let custo;
-    if(serv){custo=(matUn*c.mf)+mdoUn+varUn;}
+    if(dig){custo=(varUn*c.mf)+devUn;}
+    else if(serv){custo=(matUn*c.mf)+mdoUn+varUn;}
     else{const qtd=Math.max(1,Math.round(qtdBase*c.qf));custo=((matBruto*c.mf)/qtd)+(mdoTotal/qtd)+varUn;}
     const rf=custoFixoMensal/vendas,div=1-margemAtual/100-aliquotaAtual/100;
     if(div<=0)return`<div class="cenario-card ${c.cls}"><div class="cen-badge">${c.b}</div><div style="color:var(--red);font-size:13px;margin-top:8px">Inviável</div></div>`;
@@ -810,14 +915,14 @@ function renderCenarios(matBruto,mdoTotal,varUn,qtdBase,custoFixoMensal,vendasMe
   }).join('');
 }
 
-/* ===== TABELA ===== */
+/* TABELA */
 function renderTabela(custo,rateioFixo){
   const margens=[10,15,20,25,30,35,40,50];let html=`<thead><tr><th>Margem</th><th>Preço</th><th>Imposto</th><th>Lucro</th><th>Desc. Máx.</th></tr></thead><tbody>`;
   margens.forEach(m=>{const div=1-m/100-aliquotaAtual/100;if(div<=0){html+=`<tr><td>${m}%</td><td colspan="4" style="color:var(--red);font-size:12px">Inviável</td></tr>`;return;}const p=(custo+rateioFixo)/div,imp=p*(aliquotaAtual/100),l=p*m/100,dm=Math.max(0,(p-(custo+rateioFixo)/(1-aliquotaAtual/100))/p*100).toFixed(1),atual=m===margemAtual,cor=m<20?'var(--red)':m<=40?'var(--green)':'var(--orange)';html+=`<tr${atual?' class="atual"':''}><td>${m}%${atual?'<span class="tag-atual">ATUAL</span>':''}</td><td class="num" style="color:var(--verde)">${fmt(p)}</td><td class="num" style="color:var(--red)">${fmt(imp)}</td><td class="num" style="color:${cor}">${fmt(l)}</td><td style="color:var(--azul)">${dm}%</td></tr>`;});
   document.getElementById('tabela').innerHTML=html+'</tbody>';
 }
 
-/* ===== FICHA RESUMO ===== */
+/* FICHA */
 function renderFicha(){
   if(!dadosCalc)return;const d=dadosCalc;
   document.getElementById('fichaSub').textContent=`${d.nomeProd} · ${document.getElementById('nomeEmpresa').value||'—'} · ${new Date().toLocaleDateString('pt-BR')}`;
@@ -827,29 +932,31 @@ function renderFicha(){
     <div class="ficha-kpi"><div class="fk-num">${d.mcPct.toFixed(0)}%</div><div class="fk-lbl">Contribuição</div></div>
     <div class="ficha-kpi"><div class="fk-num">${fmt(d.lucroMensal)}</div><div class="fk-lbl">Lucro mensal</div></div>`;
   const rec=[];
-  rec.push(`Preço mínimo de venda recomendado: <strong>${fmt(d.preco)}</strong> por ${d.unidade}.`);
-  if(d.precoMercado>0&&d.precoMercado>d.preco)rec.push(`O mercado paga ${fmt(d.precoMercado)}: há espaço para cobrar mais e aumentar o lucro.`);
-  if(d.custoFixoMensal>0){const mc=d.preco-d.custoUn-d.impostoUn;if(mc>0)rec.push(`Ponto de equilíbrio: <strong>${Math.ceil(d.custoFixoMensal/mc)} ${d.serv?'atendimentos':'vendas'}/mês</strong>.`);}
-  if(d.serv)rec.push(`Trabalhe sua taxa de ocupação (${d.taxaOcup}%): quanto mais horas faturáveis, menor o custo por atendimento.`);
-  if(margemAtual<20)rec.push(`Margem atual (${margemAtual}%) está baixa — busque ao menos 20% para segurança.`);
+  rec.push(`Preço mínimo recomendado: <strong>${fmt(d.preco)}</strong> por ${d.unidade}.`);
+  rec.push(`Custo fixo rateado por unidade: <strong>${fmt(d.rateioFixo)}</strong> (${fmt(d.custoFixoMensal)} ÷ ${d.vendasMensais}).`);
+  if(d.precoMercado>0&&d.precoMercado>d.preco)rec.push(`O mercado paga ${fmt(d.precoMercado)}: há espaço para cobrar mais.`);
+  if(d.dig&&d.dsub==='assinatura'&&d.churn>0)rec.push(`LTV por assinante ≈ ${fmt(d.mcUn/(d.churn/100))} — foque em reduzir o churn para aumentá-lo.`);
+  if(d.dig&&d.dsub==='licenca'&&d.custoDev>0){const cb=d.preco-d.varUn-d.impostoUn;if(cb>0)rec.push(`Recupera o desenvolvimento em ${Math.ceil(d.custoDev/cb)} vendas.`);}
+  if(d.custoFixoMensal>0){const mc=d.preco-d.custoUn-d.impostoUn;if(mc>0)rec.push(`Ponto de equilíbrio: <strong>${Math.ceil(d.custoFixoMensal/mc)} ${d.dig?(d.dsub==='assinatura'?'assinantes':'vendas'):d.serv?'atendimentos':'vendas'}/mês</strong>.`);}
+  if(margemAtual<20)rec.push(`Margem atual (${margemAtual}%) está baixa — busque ao menos 20%.`);
   rec.push(`Revise a precificação a cada mudança de custo, imposto ou salário mínimo.`);
   document.getElementById('fichaReco').innerHTML=rec.map(r=>`<li>${r}</li>`).join('');
   document.getElementById('fichaResumo').style.display='block';
 }
 
-/* ===== WIZARD ===== */
+/* WIZARD */
 const wzSteps=[
-  {sec:'secEmpreendedor',tip:'<strong>Passo 1 — Empreendedor.</strong> Identifique quem e qual negócio está sendo precificado. Isso vai na ficha final.'},
-  {sec:'secNatureza',tip:'<strong>Passo 2 — Natureza.</strong> Escolha produto ou serviço. Serviço abre campos de <strong>hora faturável</strong>. Informe volume/capacidade.'},
-  {sec:'secFixos',tip:'<strong>Passo 3 — Custos fixos.</strong> Liste o que paga todo mês (aluguel, energia...). Eles definem seu ponto de equilíbrio.'},
-  {sec:'secImpostos',tip:'<strong>Passo 4 — Impostos.</strong> Selecione seu regime. Informal? Deixe "Sem imposto".'},
-  {sec:'secMateriais',tip:'<strong>Passo 5 — Insumos.</strong> Some matéria-prima/mercadorias (por lote em produto; por atendimento em serviço).'},
-  {sec:'secMaoObra',tip:'<strong>Passo 6 — Sua hora.</strong> Use o salário mínimo/220h como piso. Qualificação vale 2×–5× esse valor.'},
-  {sec:'secVariaveis',tip:'<strong>Passo 7 — Variáveis.</strong> Custos que existem a cada venda: embalagem, frete, comissão, maquininha.'},
+  {sec:'secEmpreendedor',tip:'<strong>Passo 1 — Empreendedor.</strong> Identifique quem e qual negócio está sendo precificado.'},
+  {sec:'secNatureza',tip:'<strong>Passo 2 — Natureza.</strong> Produto, serviço ou digital/assinatura. Cada tipo abre campos próprios.'},
+  {sec:'secFixos',tip:'<strong>Passo 3 — Custos fixos.</strong> Lance o VALOR MENSAL de cada item. O sistema divide pelo volume e rateia por unidade.'},
+  {sec:'secImpostos',tip:'<strong>Passo 4 — Impostos.</strong> Selecione o regime. Informal? "Sem imposto".'},
+  {sec:'secMateriais',tip:'<strong>Passo 5 — Insumos.</strong> Matéria-prima/mercadorias (não se aplica a digital).'},
+  {sec:'secMaoObra',tip:'<strong>Passo 6 — Sua hora.</strong> Use o salário mínimo/220h como piso (não se aplica a digital).'},
+  {sec:'secVariaveis',tip:'<strong>Passo 7 — Variáveis.</strong> Custos por venda: embalagem, frete, comissão, gateway, servidor por assinante.'},
   {sec:'secMercado',tip:'<strong>Passo 8 — Mercado.</strong> Quanto a concorrência cobra? Descubra se pode cobrar mais.'},
-  {sec:'secMargem',tip:'<strong>Passo 9 — Margem.</strong> Defina quanto quer lucrar. 30% costuma equilibrar competitividade e saúde financeira. Ao final, clique em CALCULAR.'}
+  {sec:'secMargem',tip:'<strong>Passo 9 — Margem.</strong> Defina o lucro desejado. Ao final, clique em CALCULAR.'}
 ];
-let wzCur=0;
+let wzCur=0,wzDir=1;
 function toggleWizard(){
   const on=!document.body.classList.contains('wizard-on');
   document.body.classList.toggle('wizard-on',on);
@@ -858,9 +965,13 @@ function toggleWizard(){
   document.getElementById('wizardNav').style.display=on?'block':'none';
   if(on){buildWzSteps();wzGo(0);}else{document.querySelectorAll('.wz-target').forEach(el=>el.classList.remove('wz-current'));}
 }
-function buildWzSteps(){document.getElementById('wzSteps').innerHTML=wzSteps.map((s,i)=>`<div class="wz-step" id="wzstep${i}" onclick="wzGo(${i})"><span class="wz-num">${i+1}</span>${s.sec.replace('sec','')}</div>`).join('');}
+function buildWzSteps(){document.getElementById('wzSteps').innerHTML=wzSteps.map((s,i)=>`<div class="wz-step" id="wzstep${i}" onclick="wzDir=1;wzGo(${i})"><span class="wz-num">${i+1}</span>${s.sec.replace('sec','')}</div>`).join('');}
 function wzGo(i){
-  wzCur=Math.max(0,Math.min(wzSteps.length-1,i));
+  i=Math.max(0,Math.min(wzSteps.length-1,i));
+  let guard=0;
+  while(document.getElementById(wzSteps[i].sec).offsetParent===null&&i>0&&i<wzSteps.length-1&&guard<12){i+=wzDir;guard++;}
+  i=Math.max(0,Math.min(wzSteps.length-1,i));
+  wzCur=i;
   document.querySelectorAll('.wz-target').forEach(el=>el.classList.remove('wz-current'));
   const el=document.getElementById(wzSteps[wzCur].sec);el.classList.add('wz-current');
   document.querySelectorAll('.wz-step').forEach((s,idx)=>{s.classList.toggle('active',idx===wzCur);s.classList.toggle('done',idx<wzCur);});
@@ -868,22 +979,15 @@ function wzGo(i){
   document.getElementById('wzNextBtn').textContent=wzCur===wzSteps.length-1?'Concluir ✓':'Próximo ›';
   el.scrollIntoView({behavior:'smooth',block:'center'});
 }
-function wizardStep(dir){if(wzCur===wzSteps.length-1&&dir>0){toggleWizard();jaCalculou=true;calcular();return;}wzGo(wzCur+dir);}
+function wizardStep(dir){wzDir=dir;if(wzCur===wzSteps.length-1&&dir>0){toggleWizard();jaCalculou=true;calcular();return;}wzGo(wzCur+dir);}
 
-/* ===== SALVAR / CARREGAR (Supabase) ===== */
-function coletarDados(){const g=id=>document.getElementById(id)?.value||'';return{ts:Date.now(),tipoOferta:g('tipoOferta'),nomeEmpreendedor:g('nomeEmpreendedor'),nomeEmpresa:g('nomeEmpresa'),emailEmpreendedor:g('emailEmpreendedor'),telefoneEmpreendedor:g('telefoneEmpreendedor'),nomeProduto:g('nomeProduto'),unidade:g('unidade'),qtdProduzir:g('qtdProduzir'),vendasMensais:g('vendasMensais'),capacidadeMensal:g('capacidadeMensal'),horasProd:g('horasProd'),horasDisponiveis:g('horasDisponiveis'),taxaOcupacao:g('taxaOcupacao'),horasAtendimento:g('horasAtendimento'),vendasMensaisServ:g('vendasMensaisServ'),lucroDesejado:g('lucroDesejado'),salarioMinimo:g('salarioMinimo'),valorHora:g('valorHora'),precoMercado:g('precoMercado'),regime:g('regime'),aliquotaCustom:g('aliquotaCustom'),margem:margemAtual,custoFixoMensal:listas.fixos.reduce((s,i)=>s+(parseFloat(i.valor)||0),0),listas:JSON.parse(JSON.stringify(listas))};}
+/* SALVAR/CARREGAR */
+function coletarDados(){const g=id=>document.getElementById(id)?.value||'';return{ts:Date.now(),tipoOferta:g('tipoOferta'),digitalSubtipo:g('digitalSubtipo'),nomeEmpreendedor:g('nomeEmpreendedor'),nomeEmpresa:g('nomeEmpresa'),emailEmpreendedor:g('emailEmpreendedor'),telefoneEmpreendedor:g('telefoneEmpreendedor'),nomeProduto:g('nomeProduto'),unidade:g('unidade'),qtdProduzir:g('qtdProduzir'),vendasMensais:g('vendasMensais'),capacidadeMensal:g('capacidadeMensal'),horasProd:g('horasProd'),horasDisponiveis:g('horasDisponiveis'),taxaOcupacao:g('taxaOcupacao'),horasAtendimento:g('horasAtendimento'),vendasMensaisServ:g('vendasMensaisServ'),cicloDigital:g('cicloDigital'),assinantes:g('assinantes'),churn:g('churn'),cac:g('cac'),custoDev:g('custoDev'),vendasMensaisDig:g('vendasMensaisDig'),horizonteAmort:g('horizonteAmort'),lucroDesejado:g('lucroDesejado'),salarioMinimo:g('salarioMinimo'),valorHora:g('valorHora'),precoMercado:g('precoMercado'),regime:g('regime'),aliquotaCustom:g('aliquotaCustom'),margem:margemAtual,custoFixoMensal:listas.fixos.reduce((s,i)=>s+(parseFloat(i.valor)||0),0),listas:JSON.parse(JSON.stringify(listas))};}
 async function salvarSimulacao(){
   const nome=prompt('Nome para esta simulação:',document.getElementById('nomeProduto').value||'Nova simulação');if(!nome)return;
-  const d=coletarDados(),dc=dadosCalc||{},serv=d.tipoOferta==='servico';
-  const qtd=serv?(parseInt(d.vendasMensaisServ)||1):(parseInt(d.qtdProduzir)||1);
-  const payload={
-    nome_simulacao:nome,nome_empreendedor:d.nomeEmpreendedor||'',nome_empresa:d.nomeEmpresa||'',email:d.emailEmpreendedor||'',telefone:d.telefoneEmpreendedor||'',
-    nome_produto:d.nomeProduto||'',unidade:d.unidade||'',qtd_lote:qtd,custo_fixo_mensal:parseFloat(d.custoFixoMensal)||0,custos_fixos:listas.fixos,
-    regime_tributario:d.regime||'0',aliquota_imposto:aliquotaAtual,valor_hora:parseFloat(d.valorHora)||0,materiais:listas.materiais,custos_variaveis:listas.variaveis,
-    margem_lucro:margemAtual,custo_unitario:dc.custoUn||null,preco_venda:dc.preco||null,imposto_unitario:dc.impostoUn||null,
-    lucro_lote:dc.mcUn?parseFloat((dc.mcUn*qtd).toFixed(2)):null,receita_lote:dc.preco?parseFloat((dc.preco*qtd).toFixed(2)):null,
-    dados:d // TODO: campos novos (serviço, mercado, meta) ficam no JSONB 'dados' p/ não quebrar schema
-  };
+  const d=coletarDados(),dc=dadosCalc||{};
+  const qtd=dc.vendasMensais||1;
+  const payload={nome_simulacao:nome,nome_empreendedor:d.nomeEmpreendedor||'',nome_empresa:d.nomeEmpresa||'',email:d.emailEmpreendedor||'',telefone:d.telefoneEmpreendedor||'',nome_produto:d.nomeProduto||'',unidade:d.unidade||'',qtd_lote:qtd,custo_fixo_mensal:parseFloat(d.custoFixoMensal)||0,custos_fixos:listas.fixos,regime_tributario:d.regime||'0',aliquota_imposto:aliquotaAtual,valor_hora:parseFloat(d.valorHora)||0,materiais:listas.materiais,custos_variaveis:listas.variaveis,margem_lucro:margemAtual,custo_unitario:dc.custoUn||null,preco_venda:dc.preco||null,imposto_unitario:dc.impostoUn||null,lucro_lote:dc.mcUn?parseFloat((dc.mcUn*qtd).toFixed(2)):null,receita_lote:dc.preco?parseFloat((dc.preco*qtd).toFixed(2)):null,dados:d};
   try{await salvarNoBanco(payload);d.nomeSimulacao=nome;persistLocal(d);mostrarToast('✅ "'+nome+'" salva no banco!','ok');}
   catch(e){console.error(e);d.nomeSimulacao=nome;persistLocal(d);mostrarToast('⚠️ Salvo localmente (erro no banco).','warn');}
 }
@@ -898,7 +1002,9 @@ async function abrirModal(){
 function fecharModal(){document.getElementById('modalOverlay').style.display='none';}
 function aplicarDados(d){
   const s=(id,v)=>{const el=document.getElementById(id);if(el)el.value=v||'';};
-  ['nomeEmpreendedor','nomeEmpresa','emailEmpreendedor','telefoneEmpreendedor','nomeProduto','unidade','qtdProduzir','vendasMensais','capacidadeMensal','horasProd','horasDisponiveis','taxaOcupacao','horasAtendimento','vendasMensaisServ','lucroDesejado','salarioMinimo','valorHora','precoMercado','aliquotaCustom'].forEach(id=>s(id,d[id]));
+  ['nomeEmpreendedor','nomeEmpresa','emailEmpreendedor','telefoneEmpreendedor','nomeProduto','unidade','qtdProduzir','vendasMensais','capacidadeMensal','horasProd','horasDisponiveis','taxaOcupacao','horasAtendimento','vendasMensaisServ','cicloDigital','assinantes','churn','cac','custoDev','vendasMensaisDig','horizonteAmort','lucroDesejado','salarioMinimo','valorHora','precoMercado','aliquotaCustom'].forEach(id=>s(id,d[id]));
+  document.getElementById('digitalSubtipo').value=d.digitalSubtipo||'assinatura';
+  selecionarDigitalSub(d.digitalSubtipo||'assinatura');
   selecionarTipo(d.tipoOferta||'produto');
   document.getElementById('regime').value=d.regime||'0';updateImposto();updateMinHora();
   listas.materiais=d.listas?.materiais||[];listas.variaveis=d.listas?.variaveis||[];listas.fixos=d.listas?.fixos||[];
@@ -909,12 +1015,11 @@ function carregarSimulacao(i){const s=JSON.parse(localStorage.getItem('precifica
 function carregarSimulacaoBanco(str){aplicarDados(JSON.parse(str));}
 function deletarSimulacao(i){if(!confirm('Remover esta simulação?'))return;const s=JSON.parse(localStorage.getItem('precificacoes')||'[]');s.splice(i,1);localStorage.setItem('precificacoes',JSON.stringify(s));abrirModal();}
 async function deletarSimulacaoBanco(id){if(!confirm('Remover esta simulação?'))return;try{await deletarDoBanco(id);mostrarToast('🗑 Removida.','ok');abrirModal();}catch(e){mostrarToast('⚠️ Erro ao remover.','warn');}}
-
 function mostrarToast(msg,tipo){let t=document.getElementById('toast');if(!t){t=document.createElement('div');t.id='toast';document.body.appendChild(t);}t.textContent=msg;t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:'+(tipo==='ok'?'#1A6B3C':'#e07b20')+';color:#fff;padding:12px 24px;border-radius:10px;font-family:DM Sans,sans-serif;font-size:14px;font-weight:600;box-shadow:0 4px 20px rgba(0,0,0,.2);z-index:9999;transition:opacity .4s';t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';},3000);}
 function exportarPDF(){if(!jaCalculou){alert('Calcule o preço primeiro.');return;}renderFicha();window.print();}
 function fmt(v){return'R$ '+(v||0).toFixed(2).replace('.',',').replace(/\B(?=(\d{3})+(?!\d))/g,'.');}
 
-/* ===== SUPABASE ===== */
+/* SUPABASE */
 const SUPA_URL='https://volfdnrqikfzvczwdqsa.supabase.co';
 const SUPA_KEY='sb_publishable_sEssQGx4lz2-x6xC7IcAlg_Wlem97uY';
 async function supaFetch(path,options={}){const res=await fetch(SUPA_URL+path,{...options,headers:{'apikey':SUPA_KEY,'Authorization':'Bearer '+SUPA_KEY,'Content-Type':'application/json','Prefer':options.prefer||'',...(options.headers||{})}});if(!res.ok){throw new Error(await res.text());}return res.status===204?null:res.json();}

@@ -305,13 +305,12 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
       <!-- SERVIÇO -->
       <div class="only-servico">
         <div class="info-box" style="margin-top:14px">🛠 <strong>Serviço vende tempo faturável, não "unidades".</strong> Nem toda hora trabalhada é vendável — parte vai para prospecção, administrativo e deslocamento. Por isso calculamos sua <strong>hora faturável real</strong>.</div>
-        <div style="font-size:11px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;color:var(--azul);margin:14px 0 6px">Forma de cobrança <span class="tip-ico" data-tip="Por atendimento: cobra por sessão/hora (ex.: corte, consulta, reparo). Assinatura recorrente: cliente paga uma mensalidade fixa (ex.: contabilidade, gestão de redes, personal). No recorrente, o custo fixo é rateado pelo número de assinantes, não por atendimentos.">?</span></div>
-        <div class="subtipo-grid" style="margin-top:0">
+        <div class="subtipo-grid">
           <button type="button" class="subtipo-btn active" id="btnAvulso" onclick="selecionarServicoSub('avulso')"><strong>🎯 Por atendimento / hora</strong><span>Cobra por sessão. Ex.: corte, consulta, reparo.</span></button>
-          <button type="button" class="subtipo-btn" id="btnRecorrente" onclick="selecionarServicoSub('recorrente')"><strong>🔁 Assinatura recorrente</strong><span>Mensalidade fixa por cliente. Ex.: contabilidade, personal.</span></button>
+          <button type="button" class="subtipo-btn" id="btnRecorrente" onclick="selecionarServicoSub('recorrente')"><strong>🔁 Assinatura recorrente</strong><span>Cliente paga mensalidade fixa. Ex.: contabilidade, gestão de redes, personal.</span></button>
         </div>
         <input type="hidden" id="servicoSubtipo" value="avulso">
-        <div class="grid-2" style="margin-top:14px">
+        <div class="grid-2" style="margin-top:6px">
           <div class="field"><label>Horas disponíveis por mês <span class="tip-ico" data-tip="Horas/mês que pode dedicar ao trabalho. Referência: 160h (8h × 20 dias) para dedicação integral.">?</span></label><div class="field-row"><input type="number" id="horasDisponiveis" min="1" step="1" value="160" oninput="autoCalc()"><div class="field-suffix">h/mês</div></div></div>
           <div class="field"><label>Taxa de ocupação faturável (%) <span class="tip-ico" data-tip="Do total de horas, quantas você realmente cobra do cliente. Autônomos faturam 40–60%; o resto é prospecção, orçamentos e administração.">?</span></label><div class="field-row"><input type="number" id="taxaOcupacao" min="1" max="100" step="1" value="50" oninput="autoCalc()"><div class="field-suffix">%</div></div></div>
         </div>
@@ -324,18 +323,18 @@ body.wizard-on .wz-target.wz-current{opacity:1;filter:none;pointer-events:auto;b
         </div>
         <!-- RECORRENTE -->
         <div class="sub-recorrente">
-          <div class="info-box" style="margin-top:14px">🔁 <strong>Na assinatura de serviço, o cliente paga uma mensalidade.</strong> O custo fixo global é dividido pelo <strong>número de assinantes ativos</strong> (não por atendimentos). O custo de mão de obra de cada assinante vem das horas incluídas no plano. O sistema ainda checa se a equipe dá conta: <strong>assinantes × horas do plano ≤ horas faturáveis</strong>.</div>
+          <div class="info-box" style="margin-top:14px">🔁 <strong>Na assinatura de serviço, o cliente paga uma mensalidade.</strong> O custo fixo global é dividido pelo <strong>número de assinantes ativos</strong> (não pelos atendimentos), e o custo variável de cada um vem das horas incluídas no plano. Verificamos ainda se a equipe dá conta: <strong>assinantes × horas do plano ≤ horas faturáveis</strong>.</div>
           <div class="grid-2" style="margin-top:14px">
-            <div class="field"><label>Nº de assinantes ativos previstos <span class="tip-ico" data-tip="Clientes pagantes ativos por mês. É a base do rateio do custo fixo (fixo ÷ assinantes).">?</span></label><div class="field-row"><input type="number" id="clientesRecorrentes" min="1" step="1" placeholder="Ex: 30" oninput="autoCalc()"><div class="field-suffix">assinantes</div></div></div>
-            <div class="field"><label>Capacidade máxima de assinantes (opcional) <span class="tip-ico" data-tip="Máximo que sua equipe consegue atender com qualidade. Em branco, o sistema calcula pelo limite de horas faturáveis. Alerta se a previsão ultrapassar.">?</span></label><div class="field-row"><input type="number" id="capacidadeClientes" min="1" step="1" placeholder="auto (pelas horas)" oninput="autoCalc()"><div class="field-suffix">assinantes</div></div></div>
-            <div class="field"><label>Horas incluídas no plano / assinante / mês <span class="tip-ico" data-tip="Quantas horas (ou atendimentos × horas) cada assinante consome por mês. Define o custo de mão de obra por assinante = horas × valor da hora.">?</span></label><div class="field-row"><input type="number" id="horasClienteMes" min="0.25" step="0.25" placeholder="Ex: 4" oninput="autoCalc()"><div class="field-suffix">h/mês</div></div></div>
-            <div class="field"><label>Churn mensal (%) — opcional <span class="tip-ico" data-tip="Percentual de assinantes que cancelam por mês. 5% = permanência média de 20 meses. Usado para LTV e para calcular quantos novos assinantes você precisa só para repor os cancelamentos.">?</span></label><div class="field-row"><input type="number" id="churnServ" min="0" max="100" step="0.1" placeholder="Ex: 5" oninput="autoCalc()"><div class="field-suffix">%/mês</div></div></div>
-            <div class="field"><label>CAC — custo de aquisição por cliente (opcional) <span class="tip-ico" data-tip="Quanto você gasta em marketing/vendas para conquistar 1 assinante. A relação LTV:CAC ideal é ≥ 3.">?</span></label><div class="field-row"><div class="field-prefix">R$</div><input type="number" id="cacServ" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
+            <div class="field"><label>Assinantes ativos previstos / mês <span class="tip-ico" data-tip="Número de clientes pagando a mensalidade por mês. É a base do rateio dos custos fixos: custo fixo total ÷ assinantes ativos.">?</span></label><div class="field-row"><input type="number" id="servAssinantes" min="1" step="1" placeholder="Ex: 30" oninput="autoCalc()"><div class="field-suffix">assinantes</div></div></div>
+            <div class="field"><label>Horas incluídas no plano (por assinante/mês) <span class="tip-ico" data-tip="Quantas horas de trabalho cada assinante consome por mês (atendimentos × duração). Define o custo de mão de obra de cada assinante e a capacidade da equipe.">?</span></label><div class="field-row"><input type="number" id="servHorasPlano" min="0.25" step="0.25" placeholder="Ex: 4" oninput="autoCalc()"><div class="field-suffix">h/mês</div></div></div>
+            <div class="field"><label>Capacidade máxima de assinantes (opcional) <span class="tip-ico" data-tip="Limite de assinantes que você consegue atender. Em branco, o sistema calcula pela sua capacidade de horas (horas faturáveis ÷ horas do plano).">?</span></label><div class="field-row"><input type="number" id="servCapAssinantes" min="1" step="1" placeholder="pela capacidade de horas" oninput="autoCalc()"><div class="field-suffix">assinantes</div></div></div>
+            <div class="field"><label>Churn mensal (%) — opcional <span class="tip-ico" data-tip="Percentual de assinantes que cancelam por mês. 5% = permanência média de 20 meses. Mostra quantos assinantes novos você precisa por mês só para repor os cancelamentos.">?</span></label><div class="field-row"><input type="number" id="churnServ" min="0" max="100" step="0.1" placeholder="Ex: 5" oninput="autoCalc()"><div class="field-suffix">%/mês</div></div></div>
+            <div class="field"><label>CAC — custo de aquisição (opcional) <span class="tip-ico" data-tip="Quanto você gasta em marketing/vendas para conquistar 1 assinante. A relação LTV:CAC ideal é ≥ 3.">?</span></label><div class="field-row"><div class="field-prefix">R$</div><input type="number" id="cacServ" min="0" step="0.01" placeholder="0,00" oninput="autoCalc()"></div></div>
           </div>
         </div>
         <div class="grid-2" style="margin-top:14px">
           <div class="readonly-box"><span class="rb-lbl">Horas faturáveis / mês</span><span class="rb-num" id="rbHorasFat">80 h</span></div>
-          <div class="readonly-box"><span class="rb-lbl" id="rbCapLbl">Capacidade de atendimentos / mês</span><span class="rb-num" id="rbCap">—</span></div>
+          <div class="readonly-box"><span class="rb-lbl" id="rbCapLbl">Capacidade / mês</span><span class="rb-num" id="rbCap">—</span></div>
         </div>
       </div>
 
@@ -659,7 +658,7 @@ function selecionarTipo(tipo){
     document.getElementById('tituloVariaveis').textContent='07 — Custos Variáveis por Unidade';
     document.getElementById('textoVariaveis').innerHTML='Custos que <strong>variam a cada venda</strong> — embalagem, frete, comissão, taxa de maquininha/marketplace. Valor <strong>por unidade</strong>.';
   }
-  if(serv)selecionarServicoSub(document.getElementById('servicoSubtipo').value);
+  if(tipo==='servico')selecionarServicoSub(document.getElementById('servicoSubtipo').value);
   autoCalc();
 }
 function selecionarDigitalSub(sub){
@@ -680,7 +679,7 @@ function selecionarServicoSub(sub){
   document.getElementById('tituloMateriais').textContent=rec?'05 — Insumos por Assinante / mês':'05 — Insumos Diretos do Serviço';
   document.getElementById('textoMateriais').innerHTML=rec?'Materiais e terceiros consumidos <strong>por assinante ativo, por mês</strong>.':'Materiais e terceiros usados <strong>por atendimento</strong>.';
   document.getElementById('tituloVariaveis').textContent=rec?'07 — Custos por Assinante / mês':'07 — Custos Variáveis por Unidade';
-  document.getElementById('textoVariaveis').innerHTML=rec?'Custos por <strong>assinante ativo/mês</strong> — ferramentas por cliente, deslocamento mensal, comissões recorrentes. Valor <strong>por assinante</strong>.':'Custos que <strong>variam a cada venda</strong> — embalagem, frete, comissão, taxa de maquininha/marketplace. Valor <strong>por unidade</strong>.';
+  document.getElementById('textoVariaveis').innerHTML=rec?'Custos por <strong>assinante ativo/mês</strong> — ferramentas por cliente, deslocamento mensal, comissões recorrentes.':'Custos que <strong>variam a cada venda</strong> — embalagem, frete, comissão, taxa de maquininha/marketplace. Valor <strong>por unidade</strong>.';
   document.getElementById('unidade').placeholder=rec?'Ex: mensalidade, plano':'Ex: atendimento, hora';
   autoCalc();
 }
@@ -711,7 +710,7 @@ function calcular(){
   const servSub=document.getElementById('servicoSubtipo').value;
   const nomeProd=document.getElementById('nomeProduto').value||(dig?'Produto digital':serv?'Serviço':'Produto');
   let unidade=document.getElementById('unidade').value;
-  if(!unidade)unidade=dig?(dsub==='assinatura'?'assinatura':'licença'):serv?(servSub==='recorrente'?'mensalidade':'atendimento'):'unidade';
+  if(!unidade)unidade=dig?(dsub==='assinatura'?'assinatura':'licença'):serv?'atendimento':'unidade';
   const somaL=l=>listas[l].reduce((s,i)=>s+(parseFloat(i.valor)||0),0);
   const varUn=somaL('variaveis');
   const valorHora=parseFloat(document.getElementById('valorHora').value)||0;
@@ -744,16 +743,16 @@ function calcular(){
     horasFat=horasDisp*(taxaOcup/100);
     document.getElementById('rbHorasFat').textContent=horasFat.toFixed(0)+' h';
     if(servSub==='recorrente'){
-      const clientes=parseInt(document.getElementById('clientesRecorrentes').value)||1;
-      const horasCli=parseFloat(document.getElementById('horasClienteMes').value)||1;
-      const capTempo=Math.max(1,Math.floor(horasFat/horasCli));
-      const capCli=parseInt(document.getElementById('capacidadeClientes').value)||0;
-      capacidadeMensal=capCli>0?Math.min(capCli,capTempo):capTempo;
+      const assin=parseInt(document.getElementById('servAssinantes').value)||1;
+      const horasPlano=parseFloat(document.getElementById('servHorasPlano').value)||1;
+      const capTempo=Math.max(1,Math.floor(horasFat/horasPlano));
+      const capMax=parseInt(document.getElementById('servCapAssinantes').value)||0;
+      capacidadeMensal=capMax>0?Math.min(capMax,capTempo):capTempo;
       document.getElementById('rbCapLbl').textContent='Capacidade de assinantes / mês';
-      document.getElementById('rbCap').textContent=capacidadeMensal+' assinantes';
-      vendasMensais=clientes;qtd=clientes;
-      matUn=somaL('materiais');mdoUn=valorHora*horasCli;
-      matBruto=matUn*clientes;mdoTotal=mdoUn*clientes;
+      document.getElementById('rbCap').textContent=capacidadeMensal+' assin.';
+      vendasMensais=assin;qtd=assin;assinantes=assin;
+      matUn=somaL('materiais');mdoUn=valorHora*horasPlano;
+      matBruto=matUn*assin;mdoTotal=mdoUn*assin;
       custoUn=matUn+mdoUn+varUn;
       churn=parseFloat(document.getElementById('churnServ').value)||0;
       cac=parseFloat(document.getElementById('cacServ').value)||0;
@@ -830,7 +829,7 @@ function calcular(){
   document.getElementById('dica').innerHTML=`<strong>💡 Análise:</strong> custo unitário <strong>${fmt(custoUn)}</strong>, imposto <strong>${fmt(impostoUn)}</strong>, preço ideal <strong>${fmt(preco)}</strong>.${margemAtual<20?'<br><br><strong>⚠</strong> Margem abaixo de 20%.':''}${margemAtual>=40?'<br><br><strong>✨ Margem Premium</strong> — confirme que o valor percebido justifica o preço.':''}`;
 
   ['resultado','digitalBloco','metaBloco','descontoBloco','comparadorBloco','breakEvenBloco','cenariosBloco','tabelaBloco'].forEach(id=>document.getElementById(id).style.display='block');
-  document.getElementById('digitalBloco').style.display=dig?'block':'none';
+  document.getElementById('digitalBloco').style.display=(dig||(serv&&servSub==='recorrente'))?'block':'none';
   if(!window._scrolled&&!document.body.classList.contains('wizard-on')){document.getElementById('resultado').scrollIntoView({behavior:'smooth',block:'start'});window._scrolled=true;}
 }
 
